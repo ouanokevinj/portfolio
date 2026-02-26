@@ -61,10 +61,10 @@ function Contact(){
                         </div>
                         </div>
                         <div className="flex gap-4">
-                            <a href="#" className="p-4 rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:bg-cyan-600 hover:text-white hover:border-transparent transition-all hover:-translate-y-1 shadow-lg">
+                            <a href="https://github.com/ouanokevinj" className="p-4 rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:bg-cyan-600 hover:text-white hover:border-transparent transition-all hover:-translate-y-1 shadow-lg">
                                 <FaGithub size={24} />
                             </a>
-                            <a href="#" className="p-4 rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all hover:-translate-y-1 shadow-lg">
+                            <a href="https://www.linkedin.com/in/kevin-jeff-ouano-2b0894276/" className="p-4 rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all hover:-translate-y-1 shadow-lg">
                                 <FaLinkedinIn size={24} />
                             </a>
                             <a href="#" className="p-4 rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:bg-emerald-600 hover:text-white hover:border-transparent transition-all hover:-translate-y-1 shadow-lg">
