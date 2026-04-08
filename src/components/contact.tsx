@@ -1,100 +1,250 @@
-import '../index.css'
+import '../index.css';
 import { useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
-import { HiMail, HiExternalLink } from 'react-icons/hi';
-import emailjs from '@emailjs/browser'
+import { HiMail } from 'react-icons/hi';
+import emailjs from '@emailjs/browser';
 
-function Contact(){
-    const form = useRef<HTMLFormElement>(null);
-    const [loading,setLoading] = useState(false);
+function Contact() {
+  const form = useRef<HTMLFormElement>(null);
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
 
-    const sendEmail = (e: FormEvent) => {
+  const sendEmail = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     if (form.current) {
-        emailjs.sendForm(
-            'service_d2xkh2v',  // Service Id
-            'template_xqxka9i', // Template Id
-            form.current,
-            'YzuOCClH6ePbgt9A-' // Public Key
-        ).then((result) => {
-            setLoading(false);
-            console.log(result)
-            alert('Message sent successfully!');
-            form.current?.reset();
-        }, (error) => {
-            setLoading(false);
-            alert('Failed to send message. Please try again.');
-            console.error(error.text);
-        });
+      emailjs.sendForm(
+        'service_d2xkh2v',
+        'template_xqxka9i',
+        form.current,
+        'YzuOCClH6ePbgt9A-'
+      ).then(() => {
+        setLoading(false);
+        setSent(true);
+        form.current?.reset();
+        setTimeout(() => setSent(false), 5000);
+      }, (error) => {
+        setLoading(false);
+        alert('Failed to send. Please try again.');
+        console.error(error.text);
+      });
     }
   };
-    
-    return(
-        <>
-            <section id='contact' className='min-h-screen py-20 px-4 relative overflow-hidden flex items-center'>
-                <div className='max-w-6xl mx-auto w-full relative z-10'>
-                    <div className='text-center mb-16 space-y-4'>
-                        <h2 className='text-4xl md:text-5xl font-black drop-shadow-lg'> Get in <span className='text-cyan-400 relative inline'>touch</span></h2>
 
-                        <p className='text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed'>
-                            I'm currently looking for new opportunities. Whether you have a question regarding a project, a job opportunity, or just want to say hi, my inbox is always open!
-                        </p>
-                    </div>
+  const inputStyle: React.CSSProperties = {
+    width: '100%',
+    backgroundColor: 'var(--bg-base)',
+    border: '1px solid var(--border)',
+    borderRadius: '8px',
+    padding: '0.7rem 1rem',
+    color: 'var(--text-primary)',
+    fontSize: '0.9rem',
+    outline: 'none',
+    transition: 'border-color 0.2s',
+  };
 
-                    <div className='grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20'>
-                        <div className='space-y-8 animate-slide-in-up'>
-                        <h3 className='text-3xl font-bold'>Let's Connect</h3>  
-                        <p className='text-slate-400 text=lg leading-relaxed'>
-                            I'm always open to discussing development work or partnership opportunities.
-                        </p>
+  const labelStyle: React.CSSProperties = {
+    display: 'block',
+    fontSize: '0.78rem',
+    fontWeight: 600,
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    color: 'var(--text-muted)',
+    marginBottom: '0.4rem',
+  };
 
-                        <div className='p-6 bg-slate-900/50 border border-slate-800 rounded-2xl flex items-center gap-4 hover:border-cyan-500/50 transition-colors group'>
-                            <div className='w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform'>
-                                <HiMail size={24}/>  
-                            </div>
-                        <div>
-                            <p className='text-sm text-slate-500 font-semibold tracking-wider'>Email Me</p>
-                            <a href='mailto:ouanokevinj@gmail.com' className='text-lg font-medium hover:text-cyan-400 transition-colors'>ouanokevinj@gmail.com</a>
-                        </div>
-                        </div>
-                        <div className="flex gap-4">
-                            <a href="https://github.com/ouanokevinj" className="p-4 rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:bg-cyan-600 hover:text-white hover:border-transparent transition-all hover:-translate-y-1 shadow-lg">
-                                <FaGithub size={24} />
-                            </a>
-                            <a href="https://www.linkedin.com/in/kevin-jeff-ouano-2b0894276/" className="p-4 rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all hover:-translate-y-1 shadow-lg">
-                                <FaLinkedinIn size={24} />
-                            </a>
-                            <a href="#" className="p-4 rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:bg-emerald-600 hover:text-white hover:border-transparent transition-all hover:-translate-y-1 shadow-lg">
-                                <HiExternalLink size={24} />
-                            </a>
-                        </div>
-                      </div>
-                      <form ref={form} onSubmit={sendEmail} className='space-y-6 bg-slate-900/30 p-8 rounded-3xl border border-slate-800/50 backdrop-blur-sm animate-slide-in-up' style={{animationDelay: '200ms'}}>
-                        <div className='space-y-2'>
-                            <label htmlFor='name' className='text-sm font-semibold text-slate-300 ml-1'>Your Name</label>
-                            <input type='text' id='name' name='name' placeholder='John Doe' className='w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 placeholder-slate-600 focus:outilne-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all'/>
-                        </div>
+  return (
+    <section
+      id="contact"
+      className="section-texture"
+      style={{
+        minHeight: '100vh',
+        padding: '5rem 1.5rem',
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: 'var(--bg-base)',
+      }}
+    >
+      <div style={{ maxWidth: '72rem', margin: '0 auto', width: '100%' }}>
 
-                        <div className='space-y-2'>
-                            <label htmlFor='email' className='text-sm font-semibold text-slate-300 ml-1'>Your Email</label>
-                            <input type='email' id='email' name='email' placeholder='mail@example.com' className='w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 placeholder-slate-600 focus:outilne-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all'/>
-                        </div>
+        {/* Heading */}
+        <div style={{ marginBottom: '3.5rem' }}>
+          <p style={{ fontSize: '0.7rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+            let's talk
+          </p>
+          <h2
+            className="font-display"
+            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1.1 }}
+          >
+            Get in touch
+          </h2>
+          <div style={{ marginTop: '0.75rem', height: '2px', width: '2.5rem', backgroundColor: 'var(--accent-primary)' }} />
+        </div>
 
-                        <div>
-                            <label htmlFor='message' className='text-sm font-semibold text-slate-300 ml-1'>Message</label>
-                            <textarea rows={4} name='message' placeholder='How can I help you? ' className='w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 placeholder-slate-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all resize-none'></textarea>
-                        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem' }}>
 
-                        <button type='submit' disabled={loading} className='w-full bg-cyan-600 hover:bg-cyan-600/70 rounded-xl py-4 shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all transform hover:-translate-y-1'>{loading ? 'Sending...' : 'Send Message'}</button>
-                      </form>
-                    </div>   
-                </div>
-            </section>
-        </>
-    )
+          {/* Left — info */}
+          <div>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.75, marginBottom: '2rem', fontSize: '0.95rem' }}>
+              I'm currently looking for new opportunities — whether it's a full-time role, a freelance project, or just a conversation worth having. My inbox is open.
+            </p>
+
+            {/* Email card */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                padding: '1rem 1.25rem',
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                borderRadius: '10px',
+                marginBottom: '1.5rem',
+                boxShadow: 'var(--shadow-sm)',
+              }}
+            >
+              <div style={{
+                width: '2.5rem', height: '2.5rem',
+                backgroundColor: 'var(--bg-section)',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: 'var(--accent-primary)',
+                flexShrink: 0,
+              }}>
+                <HiMail size={20} />
+              </div>
+              <div>
+                <p style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.1rem' }}>
+                  Email
+                </p>
+                <a
+                  href="mailto:ouanokevinj@gmail.com"
+                  style={{ color: 'var(--text-primary)', fontWeight: 500, fontSize: '0.9rem', textDecoration: 'none' }}
+                >
+                  ouanokevinj@gmail.com
+                </a>
+              </div>
+            </div>
+
+            {/* Social links */}
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              {[
+                { href: 'https://github.com/ouanokevinj', icon: <FaGithub size={20} />, label: 'GitHub' },
+                { href: 'https://www.linkedin.com/in/kevin-jeff-ouano-2b0894276/', icon: <FaLinkedinIn size={20} />, label: 'LinkedIn' },
+              ].map(({ href, icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  title={label}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    padding: '0.6rem 1rem',
+                    backgroundColor: 'var(--bg-card)',
+                    border: '1px solid var(--border)',
+                    borderRadius: '8px',
+                    color: 'var(--text-secondary)',
+                    fontSize: '0.82rem',
+                    fontWeight: 500,
+                    textDecoration: 'none',
+                    transition: 'border-color 0.2s, color 0.2s',
+                    boxShadow: 'var(--shadow-sm)',
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border-hover)';
+                    (e.currentTarget as HTMLAnchorElement).style.color = 'var(--accent-primary)';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)';
+                    (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-secondary)';
+                  }}
+                >
+                  {icon} {label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — form */}
+          <form
+            ref={form}
+            onSubmit={sendEmail}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.25rem',
+              backgroundColor: 'var(--bg-card)',
+              border: '1px solid var(--border)',
+              borderRadius: '12px',
+              padding: '2rem',
+              boxShadow: 'var(--shadow-card)',
+            }}
+          >
+            <div>
+              <label htmlFor="name" style={labelStyle}>Name</label>
+              <input id="name" type="text" name="name" placeholder="Your name" required style={inputStyle}
+                onFocus={e => (e.currentTarget.style.borderColor = 'var(--accent-primary)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'var(--border)')}
+              />
+            </div>
+            <div>
+              <label htmlFor="email" style={labelStyle}>Email</label>
+              <input id="email" type="email" name="email" placeholder="mail@example.com" required style={inputStyle}
+                onFocus={e => (e.currentTarget.style.borderColor = 'var(--accent-primary)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'var(--border)')}
+              />
+            </div>
+            <div>
+              <label htmlFor="message" style={labelStyle}>Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows={4}
+                placeholder="What's on your mind?"
+                required
+                style={{ ...inputStyle, resize: 'none' }}
+                onFocus={e => (e.currentTarget.style.borderColor = 'var(--accent-primary)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'var(--border)')}
+              />
+            </div>
+
+            {sent && (
+              <p style={{ fontSize: '0.85rem', color: 'var(--accent-warm)' }}>
+                ✓ Message sent — I'll get back to you soon.
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                backgroundColor: loading ? 'var(--accent-rust)' : 'var(--accent-primary)',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '0.8rem 1.5rem',
+                fontWeight: 700,
+                fontSize: '0.9rem',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                transition: 'opacity 0.2s',
+                letterSpacing: '0.04em',
+              }}
+              onMouseEnter={e => !loading && ((e.currentTarget as HTMLButtonElement).style.opacity = '0.85')}
+              onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.opacity = '1')}
+            >
+              {loading ? 'Sending…' : 'Send Message'}
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
 }
 
-export default Contact
+export default Contact;

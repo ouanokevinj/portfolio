@@ -2,31 +2,107 @@ import '../index.css';
 
 function Hero() {
   return (
-    <section id="home" className="h-screen flex flex-col justify-center items-center text-center relative px-4 md:px-8 pt-24 overflow-hidden ">
+    <section
+      id="home"
+      className="section-texture"
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        padding: '6rem 1.5rem 4rem',
+        position: 'relative',
+        overflow: 'hidden',
+        backgroundColor: 'var(--bg-base)',
+      }}
+    >
+      {/* Subtle warm tint block — NOT a blur blob */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse 80% 55% at 50% 40%, #d4820a09 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }}
+      />
 
-      <div className="relative z-10 space-y-4 md:space-y-6 max-w-4xl mx-auto animate-fade-in">
-        <div className="space-y-2">
-          <h1 className="animate-slide-in-up bg-linear-to-r bg-clip-text text-5xl sm:text-6xl md:text-7xl lg:text-[9rem] font-black leading-none tracking-tight drop-shadow-2xl">
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: '56rem', width: '100%' }}>
+
+        {/* Name block */}
+        <div style={{ marginBottom: '1.5rem' }}>
+          <h1
+            className="animate-fade-up font-display"
+            style={{
+              fontSize: 'clamp(3.5rem, 12vw, 9rem)',
+              fontWeight: 900,
+              lineHeight: 1,
+              letterSpacing: '-0.02em',
+              color: 'var(--text-primary)',
+              animationDelay: '0ms',
+            }}
+          >
             Kevin Jeff
           </h1>
-          <h2 className="animate-slide-in-up animation-delay-300 bg-linear-to-r text-blue-500 bg-clip-text text-5xl sm:text-6xl md:text-7xl lg:text-[9rem] font-black leading-none tracking-tight drop-shadow-lg">
+          <h1
+            className="animate-fade-up font-display"
+            style={{
+              fontSize: 'clamp(3.5rem, 12vw, 9rem)',
+              fontWeight: 900,
+              lineHeight: 1,
+              letterSpacing: '-0.02em',
+              color: 'var(--accent-primary)',
+              animationDelay: '120ms',
+            }}
+          >
             Ouano
-          </h2>
+          </h1>
         </div>
-        
-        <div className="flex justify-center items-center animate-slide-in-up animation-delay-600">
-            <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-wide font-mono text-blue-300 animate-typewriter-hold whitespace-nowrap overflow-hidden">
-                Software Engineer
-            </span>
+
+        {/* Role line */}
+        <div
+          className="animate-fade-up"
+          style={{ animationDelay: '280ms', display: 'flex', justifyContent: 'center' }}
+        >
+          <span
+            className="animate-typewriter-hold"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: 'clamp(1rem, 2.5vw, 1.35rem)',
+              letterSpacing: '0.1em',
+              color: 'var(--text-secondary)',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              display: 'inline-block',
+            }}
+          >
+            Full Stack Web Developer
+          </span>
         </div>
-        
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[200%] -z-10 pointer-events-none">
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-50] h-50 bg-cyan-400/30 rounded-full blur-[60px] mix-blend-screen animate-pulse"></div>
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-blue-600/10 rounded-full blur-[100px]"></div>
-          </div>
+
+        {/* Scroll cue */}
+        <div
+          className="animate-fade-up"
+          style={{
+            animationDelay: '500ms',
+            marginTop: '3rem',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            style={{
+              width: '1px',
+              height: '3rem',
+              backgroundColor: 'var(--accent-rust)',
+              opacity: 0.4,
+            }}
+          />
+        </div>
       </div>
     </section>
   );
 }
 
-export default Hero
+export default Hero;

@@ -1,16 +1,17 @@
 import '../index.css';
 import { useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
-import { FiExternalLink, FiX } from 'react-icons/fi'; // Import FiX for close icon
+import { FiExternalLink, FiX } from 'react-icons/fi';
 import enomyImg from '../assets/img/enomy-ui.png';
-import portfolioImg from '../assets/img/portfolio-front.png'
-import todoImg from '../assets/img/todo-front.png'
-import dobuImg from '../assets/img/dobu-front.png'
+import portfolioImg from '../assets/img/portfolio-front.png';
+import todoImg from '../assets/img/todo-front.png';
+import dobuImg from '../assets/img/dobu-front.png';
 
 type Project = {
   title: string;
-  description: string;
-  tech: string[];
+  note: string;           // short "label" above the title
+  description: string;   // human-written, honest
+  tech: string[];        // shown as plain text list
   image: string;
   codeUrl?: string;
   liveUrl?: string;
@@ -18,33 +19,41 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: 'Portfolio Website',
-    description: 'Professional modern website designed to showcase my skills and projects.',
-    tech: ['React TSX', 'Tailwind CSS', 'EmailJS', 'HTML', 'CSS'],
+    title: 'This Site',
+    note: 'portfolio',
+    description:
+      "You're looking at it. I built this to have somewhere to point people when they ask what I've worked on. Started as plain HTML, ended up being a proper React + TypeScript project. Got more interesting as I went.",
+    tech: ['React', 'TypeScript', 'Tailwind CSS', 'EmailJS'],
     image: portfolioImg,
-    codeUrl: '#',
+    codeUrl: 'https://github.com/ouanokevinj/portfolio',
     liveUrl: '#',
   },
   {
-    title: 'To-Do List App',
-    description: 'To-Do list application with cloud database to store your tasks',
-    tech: ['Python', 'Flask', 'HTML', 'CSS', 'JS', 'Firebase'],
+    title: 'Task Manager with Cloud Sync',
+    note: 'web app',
+    description:
+      "A to-do app backed by Firebase so your tasks don't disappear when you close the tab. I built the backend in Flask and kept the frontend intentionally simple — no framework overhead, just fast and functional.",
+    tech: ['Python', 'Flask', 'Firebase', 'HTML / CSS / JS'],
     image: todoImg,
     codeUrl: '#',
     liveUrl: '#',
   },
   {
     title: 'Dobu Martial Arts',
-    description: 'Responsive class catalog and enrollment site with dynamic interactions.',
-    tech: ['HTML', 'CSS', 'jQuery', 'JS'],
+    note: 'Academic Project',
+    description:
+      "A class catalog and enrollment site for a local martial arts gym. The client needed something that worked on phones and didn't require someone technical to update. Built with vanilla HTML/CSS and some jQuery for the interactive parts.",
+    tech: ['HTML', 'CSS', 'JavaScript', 'jQuery'],
     image: dobuImg,
     codeUrl: 'https://github.com/ouanokevinj/Dobu-Martial-Arts',
     liveUrl: 'https://dobu-martial-arts-three.vercel.app/',
   },
   {
     title: 'Enomy Finance',
-    description: 'Role-based finance management system with secure backend logic and structured data processing.',
-    tech: ['Java', 'Spring Boot', 'MySQL', 'HTML', 'CSS', 'JS', 'Bootstrap'],
+    note: 'academic project',
+    description:
+      "A role-based finance management system built for a software engineering module. Different user roles see different data and have different access levels. The backend is Spring Boot with MySQL — the kind of project that taught me how real auth and data flow actually works.",
+    tech: ['Java', 'Spring Boot', 'MySQL', 'Bootstrap'],
     image: enomyImg,
     codeUrl: '#',
     liveUrl: '#',
@@ -55,109 +64,255 @@ function Projects() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
-    <section id="projects" className="min-h-screen bg-slate-950 py-20 px-4 relative overflow-hidden">
-      {/* Background glows */}
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+    <section
+      id="projects"
+      className="section-texture"
+      style={{
+        minHeight: '100vh',
+        padding: '5rem 1.5rem',
+        backgroundColor: 'var(--bg-section)',
+      }}
+    >
+      <div style={{ maxWidth: '72rem', margin: '0 auto' }}>
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="mb-12">
-          <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight text-center md:text-left">
-            Featured <span className="text-cyan-400">Projects</span>
+        {/* Heading */}
+        <div style={{ marginBottom: '4rem' }}>
+          <p style={{ fontSize: '0.7rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+            things i've built
+          </p>
+          <h2
+            className="font-display"
+            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1.1 }}
+          >
+            Projects
           </h2>
-          <div className="mt-3 h-1.5 w-20 bg-cyan-400 rounded-full mx-auto md:mx-0" />
+          <div style={{ marginTop: '0.75rem', height: '2px', width: '2.5rem', backgroundColor: 'var(--accent-primary)' }} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((p, idx) => (
-            <article
-              key={idx}
-              className="group rounded-3xl overflow-hidden border border-white/10 bg-slate-900/40 backdrop-blur-md shadow-2xl shadow-black/50 transition-all duration-300 hover:-translate-y-2 hover:border-cyan-500/30 flex flex-col"
-            >
-              
-              <div 
-                className="h-80 relative overflow-hidden bg-slate-800 cursor-pointer" 
-                onClick={() => setSelectedImage(p.image)}
+        {/* Project rows */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5rem' }}>
+          {projects.map((p, idx) => {
+            const isEven = idx % 2 === 0;
+            return (
+              <article
+                key={idx}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gap: '2.5rem',
+                  alignItems: 'center',
+                  position: 'relative',
+                }}
               >
-                <div className="absolute inset-0" />
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-              </div>
+                {/* Big faint project number */}
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: '-1.5rem',
+                    [isEven ? 'left' : 'right']: 0,
+                    fontFamily: "'Inter', sans-serif",
+                    fontWeight: 900,
+                    fontSize: 'clamp(4rem, 10vw, 7rem)',
+                    color: 'var(--accent-primary)',
+                    opacity: 0.06,
+                    lineHeight: 1,
+                    userSelect: 'none',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
 
-              <div className="p-6 flex flex-col grow">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-2xl font-bold text-white leading-tight">
-                    {p.title}
-                  </h3>
-
-                  <div className="flex gap-3 relative z-20">
-                    <a
-                      href={p.codeUrl || '#'}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="p-2 rounded-full bg-white/5 hover:bg-cyan-500/20 text-slate-300 hover:text-cyan-400 transition-all border border-transparent hover:border-cyan-500/50"
-                      title="View Code"
-                    >
-                      <FaGithub size={18} />
-                    </a>
-                    <a
-                      href={p.liveUrl || '#'}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="p-2 rounded-full bg-white/5 hover:bg-cyan-500/20 text-slate-300 hover:text-cyan-400 transition-all border border-transparent hover:border-cyan-500/50"
-                      title="Live Demo"
-                    >
-                      <FiExternalLink size={18} />
-                    </a>
+                {/* Image side */}
+                <div
+                  className={`order-1 ${isEven ? 'md:order-1' : 'md:order-2'}`}
+                  style={{
+                    cursor: 'pointer',
+                    borderRadius: '0.75rem',
+                    overflow: 'hidden',
+                    border: '1px solid var(--border)',
+                    boxShadow: 'var(--shadow-card)',
+                    aspectRatio: '16/10',
+                    position: 'relative',
+                  }}
+                  onClick={() => setSelectedImage(p.image)}
+                >
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block',
+                      transition: 'transform 0.5s ease',
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.03)')}
+                    onMouseLeave={e => (e.currentTarget.style.transform = 'none')}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      opacity: 0,
+                      backgroundColor: 'rgba(0,0,0,0.25)',
+                      transition: 'opacity 0.3s',
+                      fontSize: '0.8rem',
+                      color: '#fff',
+                      fontWeight: 600,
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = '0')}
+                  >
+                    click to expand
                   </div>
                 </div>
 
-                <p className="text-slate-400 text-sm md:text-base leading-relaxed mb-4 line-clamp-2">
-                  {p.description}
-                </p>
+                {/* Text side */}
+                <div className={`order-2 ${isEven ? 'md:order-2' : 'md:order-1'}`}>
+                  {/* Note + title */}
+                  <p style={{
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: 'var(--text-muted)',
+                    marginBottom: '0.4rem',
+                  }}>
+                    {p.note}
+                  </p>
+                  <h3
+                    className="font-display"
+                    style={{
+                      fontSize: 'clamp(1.4rem, 3vw, 2rem)',
+                      fontWeight: 800,
+                      color: 'var(--text-primary)',
+                      marginBottom: '1rem',
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {p.title}
+                  </h3>
 
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {p.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="px-3 py-1 rounded-full text-[11px] font-semibold text-cyan-200 bg-cyan-900/20 border border-cyan-500/20 tracking-wide"
-                    >
-                      {t}
-                    </span>
-                  ))}
+                  {/* Description */}
+                  <p style={{
+                    fontSize: '0.95rem',
+                    lineHeight: 1.75,
+                    color: 'var(--text-secondary)',
+                    marginBottom: '1.25rem',
+                  }}>
+                    {p.description}
+                  </p>
+
+                  {/* Tech — plain text list style */}
+                  <p style={{
+                    fontSize: '0.78rem',
+                    color: 'var(--text-muted)',
+                    letterSpacing: '0.05em',
+                    marginBottom: '1.25rem',
+                  }}>
+                    {p.tech.join(' / ')}
+                  </p>
+
+                  {/* Links — inline text */}
+                  <div style={{ display: 'flex', gap: '1.25rem' }}>
+                    {p.codeUrl && p.codeUrl !== '#' && (
+                      <a
+                        href={p.codeUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.4rem',
+                          color: 'var(--accent-primary)',
+                          fontSize: '0.875rem',
+                          fontWeight: 600,
+                          textDecoration: 'none',
+                          borderBottom: '1px solid var(--border-hover)',
+                          paddingBottom: '1px',
+                          transition: 'color 0.2s',
+                        }}
+                      >
+                        <FaGithub size={14} /> code
+                      </a>
+                    )}
+                    {p.liveUrl && p.liveUrl !== '#' && (
+                      <a
+                        href={p.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.4rem',
+                          color: 'var(--accent-primary)',
+                          fontSize: '0.875rem',
+                          fontWeight: 600,
+                          textDecoration: 'none',
+                          borderBottom: '1px solid var(--border-hover)',
+                          paddingBottom: '1px',
+                          transition: 'color 0.2s',
+                        }}
+                      >
+                        <FiExternalLink size={14} /> live ↗
+                      </a>
+                    )}
+                    {(!p.codeUrl || p.codeUrl === '#') && (!p.liveUrl || p.liveUrl === '#') && (
+                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                        private / in progress
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
 
-      {/* fullscreen modal */}
+      {/* Image preview modal */}
       {selectedImage && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+        <div
+          style={{
+            position: 'fixed', inset: 0, zIndex: 50,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            backgroundColor: 'rgba(0,0,0,0.75)',
+            backdropFilter: 'blur(6px)',
+            padding: '1.5rem',
+          }}
           onClick={() => setSelectedImage(null)}
         >
-          {/* x button */}
-          <button 
-            className="absolute top-5 right-5 p-2 text-white/70 hover:text-white bg-black/50 rounded-full hover:bg-white/20 transition-all"
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedImage(null);
+          <button
+            style={{
+              position: 'absolute', top: '1.25rem', right: '1.25rem',
+              padding: '0.5rem',
+              borderRadius: '9999px',
+              border: '1px solid rgba(255,255,255,0.2)',
+              backgroundColor: 'rgba(0,0,0,0.4)',
+              color: '#fff',
+              cursor: 'pointer',
+              display: 'flex',
             }}
+            onClick={e => { e.stopPropagation(); setSelectedImage(null); }}
           >
-            <FiX size={32} />
+            <FiX size={24} />
           </button>
-
-          {/* enlarged */}
-          <img 
-            src={selectedImage} 
-            alt="Full Project Preview" 
-            className="max-w-full max-h-full rounded-lg shadow-2xl border border-white/10 object-contain scale-100 animate-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()} 
+          <img
+            src={selectedImage}
+            alt="Project preview"
+            style={{
+              maxWidth: '100%',
+              maxHeight: '90vh',
+              borderRadius: '0.75rem',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
+              objectFit: 'contain',
+            }}
+            onClick={e => e.stopPropagation()}
           />
         </div>
       )}

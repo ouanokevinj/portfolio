@@ -1,24 +1,148 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
-@theme {
-  --font-inter: 'Inter', sans-serif;
-  --font-poppins: 'Poppins', sans-serif;
-}
-body {
-  color: #fff;
-  background-color: #020617;
-  font-family: 'Inter', sans-serif; 
+/* ─── COLOUR TOKENS ─────────────────────────────────────────── */
+:root,
+[data-theme="autumn"] {
+  --bg-base:        #ffffff;
+  --bg-section:     #f8f4f0;
+  --bg-card:        #ffffff;
+  --bg-card-hover:  #fff9f5;
+  --border:         #e8ddd040;
+  --border-hover:   #c8621a66;
+
+  --text-primary:   #1a0e05;
+  --text-secondary: #5a3a1a;
+  --text-muted:     #9a7050;
+  --text-inverse:   #ffffff;
+
+  --accent-primary: #c8621a;   /* burnt orange  */
+  --accent-warm:    #d4820a;   /* deep amber    */
+  --accent-rust:    #a0522d;   /* rust brown    */
+  --accent-dark:    #7a4f2e;   /* dried leaf    */
+
+  --nav-bg:         #ffffffee;
+  --nav-border:     #e8ddd066;
+
+  --shadow-sm:      0 1px 4px #0000000a;
+  --shadow-md:      0 4px 20px #00000012;
+  --shadow-card:    0 2px 12px #c8621a0d;
 }
 
-@layer utilities {
-  @keyframes typewriter-hold {
-    0% { width: 0%; }
-    30% { width: 100%; }  /* Type complete at 30% (1.8s of 6s) */
-    100% { width: 100%; } /* Hold visible 70% (4.2s) */
-  }
-  
-  .animate-typewriter-hold {
-    animation: typewriter-hold 6s steps(15) infinite;
-  }
+[data-theme="night"] {
+  --bg-base:        #0e0b08;
+  --bg-section:     #140f0a;
+  --bg-card:        #1c1410;
+  --bg-card-hover:  #241a12;
+  --border:         #3d2f2530;
+  --border-hover:   #c4621a66;
+
+  --text-primary:   #f0dfc0;
+  --text-secondary: #c8a46a;
+  --text-muted:     #7a6248;
+  --text-inverse:   #0e0b08;
+
+  --accent-primary: #c4621a;   /* ember orange   */
+  --accent-warm:    #c4891a;   /* muted amber    */
+  --accent-rust:    #9a5030;   /* rust           */
+  --accent-dark:    #c8a46a;   /* warm highlight */
+
+  --nav-bg:         #0e0b08ee;
+  --nav-border:     #3d2f2540;
+
+  --shadow-sm:      0 1px 4px #00000040;
+  --shadow-md:      0 4px 20px #00000055;
+  --shadow-card:    0 2px 12px #00000044;
+}
+
+/* ─── BASE ───────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+/* ─── LOADING SCREEN ─────────────────────────────────────────── */
+@keyframes letter-drop {
+  0%   { opacity: 0; transform: translateY(-30px) rotate(-4deg); }
+  60%  { opacity: 1; transform: translateY(4px)   rotate(0.5deg); }
+  100% { opacity: 1; transform: translateY(0)     rotate(0deg); }
+}
+
+@keyframes loader-exit {
+  0%   { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+}
+
+@keyframes loader-wipe {
+  0%   { transform: translateY(0%); }
+  100% { transform: translateY(-100%); }
+}
+
+.loader-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: letter-drop 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.loader-exit {
+  animation: loader-wipe 0.65s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* ─── SECTION PATTERN ────────────────────────────────────────── */
+.section-texture {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+}
+
+/* ─── SCROLLBAR ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--accent-rust); border-radius: 99px; }
+
+/* ─── UTILITY ANIMATIONS ─────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes typewriter-hold {
+  0%   { width: 0%; }
+  30%  { width: 100%; }
+  100% { width: 100%; }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease both;
+}
+
+.animate-typewriter-hold {
+  animation: typewriter-hold 5s steps(24) infinite;
+}
+
+/* ─── LEAF ACCENT (decorative) ───────────────────────────────── */
+.leaf-accent::before {
+  content: '🍂';
+  position: absolute;
+  font-size: 1rem;
+  opacity: 0.25;
+  pointer-events: none;
 }

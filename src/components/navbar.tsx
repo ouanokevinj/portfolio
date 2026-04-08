@@ -1,96 +1,205 @@
-import '../index.css'
-import {useState, useEffect } from 'react';
+import '../index.css';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
+import { useTheme } from '../context/ThemeContext';
 
-function Navbar(){
-    const [isOpen, setIsOpen ] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
+const SunIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="5" />
+    <line x1="12" y1="1" x2="12" y2="3" />
+    <line x1="12" y1="21" x2="12" y2="23" />
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+    <line x1="1" y1="12" x2="3" y2="12" />
+    <line x1="21" y1="12" x2="23" y2="12" />
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+  </svg>
+);
 
-     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 20);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+const MoonIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+);
 
-    useEffect(() => {
-        setIsOpen(false); // Force closed on load
-    }, []);
+const navLinks = [
+  { to: 'home',     label: 'Home'     },
+  { to: 'about',    label: 'About'    },
+  { to: 'skills',   label: 'Skills'   },
+  { to: 'projects', label: 'Projects' },
+  { to: 'contact',  label: 'Contact'  },
+];
 
-    const navLinks = [
-        { to: 'home', label: 'Home' },
-        { to: 'about', label: 'About' },
-        { to: 'skills', label: 'Skills' },
-        { to: 'projects', label: 'Projects' },
-        { to: 'contact', label: 'Contact' }
-    ];
+function Navbar() {
+  const [isOpen,   setIsOpen]   = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
-    return (
-        <>
-            <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/80 backdrop-blur-lg h-16' : 'bg-transparent py-4 h-20'} `} >
-                <div className='max-w-6xl mx-auto px-4'>
-                    <div className='flex justify-between items-center py-4'>
-                        <Link to="home" smooth duration={500} className="text-2xl font-bold text-white hover:text-blue-400 cursor-pointer transition">
-                        autumndude
-                        </Link>
-                        
-                        {/* Desktop */}
-                        <ul className='hidden md:flex space-x-2'>
-                        {navLinks.map((link) => (
-                            <li key={link.to}>
-                            <Link
-                                to={link.to}
-                                spy={true}
-                                smooth={true}
-                                offset={-80}
-                                duration={500}
-                                className='text-white hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition'
-                            >
-                                {link.label}
-                            </Link>
-                            </li>
-                        ))}
-                        </ul>
-                        {/* Mobile */}
-                        <button
-                            onClick={ () => setIsOpen(!isOpen) }
-                            className={`md:hidden p-1 rounded-md focus:outline-none transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`}
-                        >
-                        <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                            <path 
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                strokeWidth={2}
-                                d={isOpen ? 'M6 18L18 6M6 6L12 12' :  'M4 6h16M4 12h16M4 18h16'}
-                            />
-                        </svg>
-                        </button>
-                    </div>
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-                    {/* Mobile Menu */}
-                    {isOpen ? (
-                        <div className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-96 opacity-100 border-t border-slate-800 pb-4 bg-slate-950/95 backdrop-blur-md' : 'max-h-o opacity-0'}`}>
-                        <ul className='space-y-2'>
-                            {navLinks.map((link) => (
-                                <li key={link.to}>
-                                    <Link
-                                        to={link.to}
-                                        smooth
-                                        spy
-                                        duration={300}
-                                        onClick={ () => setIsOpen(false) }
-                                        className='block hover:text-blue-400 px-3 py-2 rounded-md text-base font-medium'    
-                                    >
-                                        {link.label}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    ) : null}
-                </div>
-            </nav>
-        </>
-    )
+  useEffect(() => { setIsOpen(false); }, []);
+
+  const navStyle: React.CSSProperties = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 50,
+    transition: 'background-color 0.3s ease, box-shadow 0.3s ease, height 0.3s ease',
+    backgroundColor: (scrolled || isOpen) ? 'var(--nav-bg)' : 'transparent',
+    borderBottom: (scrolled || isOpen) ? '1px solid var(--nav-border)' : '1px solid transparent',
+    backdropFilter: (scrolled || isOpen) ? 'blur(8px)' : 'none',
+  };
+
+  const linkStyle: React.CSSProperties = {
+    color: 'var(--text-secondary)',
+    fontWeight: 500,
+    fontSize: '0.875rem',
+    padding: '6px 12px',
+    borderRadius: '6px',
+    transition: 'color 0.2s ease',
+    cursor: 'pointer',
+    letterSpacing: '0.02em',
+    textDecoration: 'none',
+  };
+
+  return (
+    <nav style={navStyle}>
+      <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '0 1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: scrolled ? '60px' : '72px', transition: 'height 0.3s ease' }}>
+
+          {/* Logo */}
+          <Link
+            to="home"
+            smooth
+            duration={500}
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontWeight: 800,
+              fontSize: '1.35rem',
+              color: 'var(--accent-primary)',
+              cursor: 'pointer',
+              letterSpacing: '0.02em',
+            }}
+          >
+            autumndude
+          </Link>
+
+          {/* Desktop links */}
+          <div style={{ alignItems: 'center', gap: '0.25rem' }} className="hidden md:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                spy
+                smooth
+                offset={-80}
+                duration={500}
+                style={linkStyle}
+                activeStyle={{ color: 'var(--accent-primary)' }}
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            {/* Theme toggle */}
+            <button
+              onClick={toggleTheme}
+              title={theme === 'autumn' ? 'Switch to night mode' : 'Switch to autumn mode'}
+              style={{
+                marginLeft: '0.75rem',
+                padding: '7px',
+                borderRadius: '8px',
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--bg-card)',
+                color: 'var(--text-secondary)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                transition: 'border-color 0.2s, background-color 0.2s',
+              }}
+            >
+              {theme === 'autumn' ? <MoonIcon /> : <SunIcon />}
+            </button>
+          </div>
+
+          {/* Mobile: toggle + hamburger */}
+          <div style={{ alignItems: 'center', gap: '0.5rem' }} className="flex md:hidden">
+            <button
+              onClick={toggleTheme}
+              style={{
+                 padding: '6px',
+                 borderRadius: '8px',
+                 border: '1px solid var(--border)',
+                 backgroundColor: 'var(--bg-card)',
+                 color: 'var(--text-secondary)',
+                 cursor: 'pointer',
+                 display: 'flex',
+                 alignItems: 'center',
+              }}
+            >
+              {theme === 'autumn' ? <MoonIcon /> : <SunIcon />}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              style={{
+                padding: '6px',
+                borderRadius: '8px',
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--bg-card)',
+                color: 'var(--text-secondary)',
+                cursor: 'pointer',
+                transition: 'transform 0.3s',
+                transform: isOpen ? 'rotate(90deg)' : 'none',
+              }}
+            >
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        {isOpen && (
+          <div style={{
+            borderTop: '1px solid var(--border)',
+            paddingBottom: '1rem',
+            backgroundColor: 'var(--nav-bg)',
+            backdropFilter: 'blur(8px)',
+          }}>
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                smooth
+                spy
+                duration={300}
+                offset={-80}
+                onClick={() => setIsOpen(false)}
+                style={{
+                  display: 'block',
+                  padding: '10px 16px',
+                  color: 'var(--text-secondary)',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'color 0.2s',
+                }}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;
