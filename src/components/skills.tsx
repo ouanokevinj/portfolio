@@ -5,16 +5,18 @@ import {
 import {
   SiUbuntu, SiDocker, SiMysql, SiFirebase, SiSpring,
   SiPython, SiPhp, SiTailwindcss, SiReact, SiJavascript,
-  SiTypescript, SiFlask
+  SiTypescript, SiFlask, SiPostgresql, SiCplusplus
 } from 'react-icons/si';
 
 const skills = [
   { name: 'Ubuntu',                  icon: <SiUbuntu className="text-orange-600" /> },
   { name: 'Docker',                  icon: <SiDocker className="text-blue-500" /> },
   { name: 'MySQL',                   icon: <SiMysql className="text-blue-300" /> },
+  { name: 'PostgreSQL',              icon: <SiPostgresql className="text-blue-400" /> },
   { name: 'Firebase',                icon: <SiFirebase className="text-yellow-500" /> },
   { name: 'Git',                     icon: <FaGitAlt className="text-red-500" /> },
   { name: 'Java',                    icon: <FaJava className="text-red-600" /> },
+  { name: 'C++',                     icon: <SiCplusplus className="text-blue-700" /> },
   { name: 'Spring',                  icon: <SiSpring className="text-green-500" /> },
   { name: 'Python',                  icon: <SiPython className="text-yellow-300" /> },
   { name: 'Flask',                   icon: <SiFlask style={{ color: 'var(--text-secondary)' }} /> },

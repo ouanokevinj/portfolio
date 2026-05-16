@@ -6,12 +6,13 @@ import enomyImg from '../assets/img/enomy-ui.png';
 import portfolioImg from '../assets/img/portfolio-front.png';
 import todoImg from '../assets/img/todo-front.png';
 import dobuImg from '../assets/img/dobu-front.png';
+import crmImg from '../assets/img/crm-front.png';
 
 type Project = {
   title: string;
-  note: string;           // short "label" above the title
-  description: string;   // human-written, honest
-  tech: string[];        // shown as plain text list
+  note: string;           
+  description: string;   
+  tech: string[];       
   image: string;
   codeUrl?: string;
   liveUrl?: string;
@@ -55,6 +56,15 @@ const projects: Project[] = [
       "A role-based finance management system built for a software engineering module. Different user roles see different data and have different access levels. The backend is Spring Boot with MySQL — the kind of project that taught me how real auth and data flow actually works.",
     tech: ['Java', 'Spring Boot', 'MySQL', 'Bootstrap'],
     image: enomyImg,
+    codeUrl: '#',
+    liveUrl: '#',
+  },
+  {
+    title: 'SyncFlow CRM',
+    note: 'personal project',
+    description: "An automated Customer Relationship Management (CRM) system featuring a comprehensive lead management pipeline, task automation, and a business analytics dashboard. Built with a Vue.js and TypeScript frontend backed by Laravel and PostgreSQL, this project implements robust role-based access control, ensuring different users have tailored data visibility and secure authentication.",
+    tech: ['Vue.js', 'TypeScript', 'Laravel', 'PostgreSQL', 'Tailwind CSS'],
+    image: crmImg,
     codeUrl: '#',
     liveUrl: '#',
   },

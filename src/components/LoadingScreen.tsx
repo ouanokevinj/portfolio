@@ -11,9 +11,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
-    // Start exit animation after letters have all dropped in (~2.2s)
     const exitTimer = setTimeout(() => setExiting(true), 2200);
-    // Fully remove after exit animation completes (~0.65s)
     const doneTimer = setTimeout(onComplete, 2900);
     return () => {
       clearTimeout(exitTimer);
@@ -36,7 +34,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
         gap: '1rem',
       }}
     >
-      {/* Brand word */}
+      
       <p
         style={{
           fontFamily: "'Inter', sans-serif",
@@ -61,7 +59,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
         ))}
       </p>
 
-      {/* Subtle tagline */}
+      
       <p
         style={{
           fontFamily: "'Inter', sans-serif",
@@ -76,7 +74,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
         portfolio
       </p>
 
-      {/* Thin progress bar */}
+      {/* progress bar */}
       <div
         style={{
           position: 'absolute',
