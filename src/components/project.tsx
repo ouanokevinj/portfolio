@@ -7,6 +7,7 @@ import portfolioImg from '../assets/img/portfolio-front.png';
 import todoImg from '../assets/img/todo-front.png';
 import dobuImg from '../assets/img/dobu-front.png';
 import crmImg from '../assets/img/crm-front.png';
+import libraryBorrowImg from '../assets/img/library-borrow-prototype.jpg';
 
 type Project = {
   title: string;
@@ -66,6 +67,15 @@ const projects: Project[] = [
     tech: ['Vue.js', 'TypeScript', 'Laravel', 'PostgreSQL', 'Tailwind CSS'],
     image: crmImg,
     codeUrl: '#',
+    liveUrl: '#',
+  },
+  {
+    title: 'Library Borrow System',
+    note: 'freelance project',
+    description: "A system for borrowing and returning books from the library. Utilizes ESP8266 and Arduino with firebase database integration to store data of students and books.",
+    tech: ['Arduino Uno', 'ESP8266', 'C++', 'Firebase'],
+    image: libraryBorrowImg,
+    codeUrl: 'https://github.com/ouanokevinj/Library-Borrow-System',
     liveUrl: '#',
   },
 ];
