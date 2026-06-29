@@ -1,19 +1,20 @@
 import '../index.css';
 import { useState } from 'react';
+import SectionHeader from './SectionHeader';
 import { FaGithub } from 'react-icons/fa';
 import { FiExternalLink, FiX } from 'react-icons/fi';
-import enomyImg from '../assets/img/enomy-ui.png';
+import enomyImg     from '../assets/img/enomy-ui.png';
 import portfolioImg from '../assets/img/portfolio-front.png';
-import todoImg from '../assets/img/todo-front.png';
-import dobuImg from '../assets/img/dobu-front.png';
-import crmImg from '../assets/img/crm-front.png';
-import libraryBorrowImg from '../assets/img/library-borrow-prototype.jpg';
+import todoImg      from '../assets/img/todo-front.png';
+import dobuImg      from '../assets/img/dobu-front.png';
+import crmImg       from '../assets/img/crm-front.png';
+import libraryImg   from '../assets/img/library-borrow-prototype.jpg';
 
 type Project = {
   title: string;
-  note: string;           
-  description: string;   
-  tech: string[];       
+  note: string;
+  description: string;
+  tech: string[];
   image: string;
   codeUrl?: string;
   liveUrl?: string;
@@ -21,62 +22,50 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: 'This Site',
-    note: 'portfolio',
-    description:
-      "You're looking at it. I built this to have somewhere to point people when they ask what I've worked on. Started as plain HTML, ended up being a proper React + TypeScript project. Got more interesting as I went.",
-    tech: ['React', 'TypeScript', 'Tailwind CSS', 'EmailJS'],
-    image: portfolioImg,
-    codeUrl: 'https://github.com/ouanokevinj/portfolio',
-    liveUrl: '#',
+    title: 'Library Borrow System',
+    note: 'Freelance Project',
+    description: "Students scan their RFID cards, the Arduino reads the tag via ESP8266, and the data syncs to Firebase in real time. Deployed and actively used. This is the project that most shows how software connects to the physical world.",
+    tech: ['Arduino Uno', 'ESP8266', 'C++', 'Firebase'],
+    image: libraryImg,
+    codeUrl: 'https://github.com/ouanokevinj/Library-Borrow-System',
+  },
+  {
+    title: 'SyncFlow CRM',
+    note: 'Personal Project',
+    description: "An automated CRM with a lead-management pipeline, task automation, and analytics. Vue + TypeScript frontend, Laravel + PostgreSQL backend, role-based access control.",
+    tech: ['Vue.js', 'TypeScript', 'Laravel', 'PostgreSQL', 'Tailwind CSS'],
+    image: crmImg,
+  },
+  {
+    title: 'Enomy Finance',
+    note: 'Academic Project',
+    description: "A role-based finance management system. Different roles see different data — the project that taught me how real auth, authorization, and data scoping work in practice.",
+    tech: ['Java', 'Spring Boot', 'MySQL', 'Bootstrap'],
+    image: enomyImg,
   },
   {
     title: 'Task Manager with Cloud Sync',
-    note: 'web app',
-    description:
-      "A to-do app backed by Firebase so your tasks don't disappear when you close the tab. I built the backend in Flask and kept the frontend intentionally simple — no framework overhead, just fast and functional.",
+    note: 'Web App',
+    description: "A to-do app backed by Firebase so your tasks don't disappear when you close the tab. Flask backend, intentionally minimal frontend — focused on the real-time sync behaviour.",
     tech: ['Python', 'Flask', 'Firebase', 'HTML / CSS / JS'],
     image: todoImg,
-    codeUrl: '#',
-    liveUrl: '#',
   },
   {
     title: 'Dobu Martial Arts',
     note: 'Academic Project',
-    description:
-      "A class catalog and enrollment site for a local martial arts gym. The client needed something that worked on phones and didn't require someone technical to update. Built with vanilla HTML/CSS and some jQuery for the interactive parts.",
+    description: "A class catalog and enrollment site for a local martial arts gym. Brief: work on phones, don't need a technical person to maintain it. Vanilla HTML/CSS with jQuery.",
     tech: ['HTML', 'CSS', 'JavaScript', 'jQuery'],
     image: dobuImg,
     codeUrl: 'https://github.com/ouanokevinj/Dobu-Martial-Arts',
     liveUrl: 'https://dobu-martial-arts-three.vercel.app/',
   },
   {
-    title: 'Enomy Finance',
-    note: 'academic project',
-    description:
-      "A role-based finance management system built for a software engineering module. Different user roles see different data and have different access levels. The backend is Spring Boot with MySQL — the kind of project that taught me how real auth and data flow actually works.",
-    tech: ['Java', 'Spring Boot', 'MySQL', 'Bootstrap'],
-    image: enomyImg,
-    codeUrl: '#',
-    liveUrl: '#',
-  },
-  {
-    title: 'SyncFlow CRM',
-    note: 'personal project',
-    description: "An automated Customer Relationship Management (CRM) system featuring a comprehensive lead management pipeline, task automation, and a business analytics dashboard. Built with a Vue.js and TypeScript frontend backed by Laravel and PostgreSQL, this project implements robust role-based access control, ensuring different users have tailored data visibility and secure authentication.",
-    tech: ['Vue.js', 'TypeScript', 'Laravel', 'PostgreSQL', 'Tailwind CSS'],
-    image: crmImg,
-    codeUrl: '#',
-    liveUrl: '#',
-  },
-  {
-    title: 'Library Borrow System',
-    note: 'freelance project',
-    description: "A system for borrowing and returning books from the library. Utilizes ESP8266 and Arduino with firebase database integration to store data of students and books.",
-    tech: ['Arduino Uno', 'ESP8266', 'C++', 'Firebase'],
-    image: libraryBorrowImg,
-    codeUrl: 'https://github.com/ouanokevinj/Library-Borrow-System',
-    liveUrl: '#',
+    title: 'This Site',
+    note: 'Portfolio',
+    description: "Started as plain HTML. Became React + TypeScript when I wanted a contact form and dark mode. Stack is simple on purpose — a portfolio doesn't need a backend.",
+    tech: ['React', 'TypeScript', 'Tailwind CSS', 'EmailJS'],
+    image: portfolioImg,
+    codeUrl: 'https://github.com/ouanokevinj/portfolio',
   },
 ];
 
@@ -86,254 +75,98 @@ function Projects() {
   return (
     <section
       id="projects"
-      className="section-texture"
-      style={{
-        minHeight: '100vh',
-        padding: '5rem 1.5rem',
-        backgroundColor: 'var(--bg-section)',
-      }}
+      style={{ minHeight: '100vh', padding: '5rem 3rem', backgroundColor: 'var(--bg-base)' }}
     >
-      <div style={{ maxWidth: '72rem', margin: '0 auto' }}>
+      <SectionHeader label="Work" title="Selected work" />
 
-        {/* Heading */}
-        <div style={{ marginBottom: '4rem' }}>
-          <p style={{ fontSize: '0.7rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-            things i've built
-          </p>
-          <h2
-            className="font-display"
-            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1.1 }}
-          >
-            Projects
-          </h2>
-          <div style={{ marginTop: '0.75rem', height: '2px', width: '2.5rem', backgroundColor: 'var(--accent-primary)' }} />
-        </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        {projects.map((p, idx) => {
+          const hasCode = p.codeUrl && p.codeUrl !== '#';
+          const hasLive = p.liveUrl && p.liveUrl !== '#';
 
-        {/* Project rows */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '5rem' }}>
-          {projects.map((p, idx) => {
-            const isEven = idx % 2 === 0;
-            return (
-              <article
-                key={idx}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                  gap: '2.5rem',
-                  alignItems: 'center',
-                  position: 'relative',
-                }}
+          return (
+            <article
+              key={idx}
+              className="card card-hover"
+              style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', overflow: 'hidden' }}
+            >
+              {/* Image */}
+              <div
+                style={{ cursor: 'pointer', overflow: 'hidden', aspectRatio: '16/10', position: 'relative' }}
+                onClick={() => setSelectedImage(p.image)}
               >
-                {/* Big faint project number */}
-                <span
-                  style={{
-                    position: 'absolute',
-                    top: '-1.5rem',
-                    [isEven ? 'left' : 'right']: 0,
-                    fontFamily: "'Inter', sans-serif",
-                    fontWeight: 900,
-                    fontSize: 'clamp(4rem, 10vw, 7rem)',
-                    color: 'var(--accent-primary)',
-                    opacity: 0.06,
-                    lineHeight: 1,
-                    userSelect: 'none',
-                    pointerEvents: 'none',
-                  }}
-                >
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-
-                {/* Image side */}
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  loading="lazy"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s ease' }}
+                  onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
+                  onMouseLeave={e => (e.currentTarget.style.transform = 'none')}
+                />
                 <div
-                  className={`order-1 ${isEven ? 'md:order-1' : 'md:order-2'}`}
-                  style={{
-                    cursor: 'pointer',
-                    borderRadius: '0.75rem',
-                    overflow: 'hidden',
-                    border: '1px solid var(--border)',
-                    boxShadow: 'var(--shadow-card)',
-                    aspectRatio: '16/10',
-                    position: 'relative',
-                  }}
-                  onClick={() => setSelectedImage(p.image)}
+                  style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, background: 'rgba(0,0,0,0.2)', transition: 'opacity 0.3s' }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = '0')}
                 >
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block',
-                      transition: 'transform 0.5s ease',
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.03)')}
-                    onMouseLeave={e => (e.currentTarget.style.transform = 'none')}
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      opacity: 0,
-                      backgroundColor: 'rgba(0,0,0,0.25)',
-                      transition: 'opacity 0.3s',
-                      fontSize: '0.8rem',
-                      color: '#fff',
-                      fontWeight: 600,
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase',
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-                    onMouseLeave={e => (e.currentTarget.style.opacity = '0')}
-                  >
-                    click to expand
-                  </div>
+                  <span className="eyebrow" style={{ color: '#fff', background: 'rgba(0,0,0,0.5)', padding: '0.35rem 0.7rem', borderRadius: 'var(--radius-full)', fontSize: '0.62rem' }}>Expand ↗</span>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div style={{ padding: '1.75rem 2rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <p className="eyebrow" style={{ marginBottom: '0.5rem' }}>{p.note}</p>
+                <h3
+                  className="font-display project-title"
+                  style={{ fontSize: 'clamp(1.2rem, 2.5vw, 1.65rem)', fontWeight: 700, marginBottom: '0.75rem', lineHeight: 1.15 }}
+                >
+                  {p.title}
+                </h3>
+                <p style={{ fontSize: '0.9rem', lineHeight: 1.75, color: 'var(--text-secondary)', marginBottom: '1.1rem' }}>
+                  {p.description}
+                </p>
+
+                {/* Tech pills */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
+                  {p.tech.map(t => (
+                    <span key={t} style={{ padding: '0.25rem 0.6rem', background: 'var(--bg-chip)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-muted)' }}>
+                      {t}
+                    </span>
+                  ))}
                 </div>
 
-                {/* Text side */}
-                <div className={`order-2 ${isEven ? 'md:order-2' : 'md:order-1'}`}>
-                  {/* Note + title */}
-                  <p style={{
-                    fontSize: '0.7rem',
-                    letterSpacing: '0.2em',
-                    textTransform: 'uppercase',
-                    color: 'var(--text-muted)',
-                    marginBottom: '0.4rem',
-                  }}>
-                    {p.note}
-                  </p>
-                  <h3
-                    className="font-display"
-                    style={{
-                      fontSize: 'clamp(1.4rem, 3vw, 2rem)',
-                      fontWeight: 800,
-                      color: 'var(--text-primary)',
-                      marginBottom: '1rem',
-                      lineHeight: 1.2,
-                    }}
-                  >
-                    {p.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p style={{
-                    fontSize: '0.95rem',
-                    lineHeight: 1.75,
-                    color: 'var(--text-secondary)',
-                    marginBottom: '1.25rem',
-                  }}>
-                    {p.description}
-                  </p>
-
-                  {/* Tech — plain text list style */}
-                  <p style={{
-                    fontSize: '0.78rem',
-                    color: 'var(--text-muted)',
-                    letterSpacing: '0.05em',
-                    marginBottom: '1.25rem',
-                  }}>
-                    {p.tech.join(' / ')}
-                  </p>
-
-                  {/* Links — inline text */}
-                  <div style={{ display: 'flex', gap: '1.25rem' }}>
-                    {p.codeUrl && p.codeUrl !== '#' && (
-                      <a
-                        href={p.codeUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.4rem',
-                          color: 'var(--accent-primary)',
-                          fontSize: '0.875rem',
-                          fontWeight: 600,
-                          textDecoration: 'none',
-                          borderBottom: '1px solid var(--border-hover)',
-                          paddingBottom: '1px',
-                          transition: 'color 0.2s',
-                        }}
-                      >
-                        <FaGithub size={14} /> code
-                      </a>
-                    )}
-                    {p.liveUrl && p.liveUrl !== '#' && (
-                      <a
-                        href={p.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.4rem',
-                          color: 'var(--accent-primary)',
-                          fontSize: '0.875rem',
-                          fontWeight: 600,
-                          textDecoration: 'none',
-                          borderBottom: '1px solid var(--border-hover)',
-                          paddingBottom: '1px',
-                          transition: 'color 0.2s',
-                        }}
-                      >
-                        <FiExternalLink size={14} /> live ↗
-                      </a>
-                    )}
-                    {(!p.codeUrl || p.codeUrl === '#') && (!p.liveUrl || p.liveUrl === '#') && (
-                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                        private / in progress
-                      </span>
-                    )}
-                  </div>
+                {/* Links */}
+                <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+                  {hasCode && (
+                    <a href={p.codeUrl} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--accent-primary)', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none' }}>
+                      <FaGithub size={14} /> Code
+                    </a>
+                  )}
+                  {hasLive && (
+                    <a href={p.liveUrl} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--accent-primary)', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none' }}>
+                      <FiExternalLink size={14} /> Live ↗
+                    </a>
+                  )}
+                  {!hasCode && !hasLive && (
+                    <span className="eyebrow" style={{ fontSize: '0.65rem' }}>Private / In progress</span>
+                  )}
                 </div>
-              </article>
-            );
-          })}
-        </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
 
-      {/* Image preview modal */}
+      {/* Lightbox */}
       {selectedImage && (
         <div
-          style={{
-            position: 'fixed', inset: 0, zIndex: 50,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            backgroundColor: 'rgba(0,0,0,0.75)',
-            backdropFilter: 'blur(6px)',
-            padding: '1.5rem',
-          }}
+          style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', padding: '1.5rem' }}
           onClick={() => setSelectedImage(null)}
         >
-          <button
-            style={{
-              position: 'absolute', top: '1.25rem', right: '1.25rem',
-              padding: '0.5rem',
-              borderRadius: '9999px',
-              border: '1px solid rgba(255,255,255,0.2)',
-              backgroundColor: 'rgba(0,0,0,0.4)',
-              color: '#fff',
-              cursor: 'pointer',
-              display: 'flex',
-            }}
-            onClick={e => { e.stopPropagation(); setSelectedImage(null); }}
-          >
-            <FiX size={24} />
+          <button aria-label="Close preview" style={{ position: 'absolute', top: '1.25rem', right: '1.25rem', padding: '0.5rem', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(0,0,0,0.5)', color: '#fff', cursor: 'pointer', display: 'flex' }}
+            onClick={e => { e.stopPropagation(); setSelectedImage(null); }}>
+            <FiX size={22} />
           </button>
-          <img
-            src={selectedImage}
-            alt="Project preview"
-            style={{
-              maxWidth: '100%',
-              maxHeight: '90vh',
-              borderRadius: '0.75rem',
-              boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
-              objectFit: 'contain',
-            }}
-            onClick={e => e.stopPropagation()}
-          />
+          <img src={selectedImage} alt="Project preview" style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: 'var(--radius)', objectFit: 'contain', boxShadow: '0 24px 80px rgba(0,0,0,0.7)' }} onClick={e => e.stopPropagation()} />
         </div>
       )}
     </section>

@@ -1,247 +1,130 @@
 import '../index.css';
 import { useRef, useState } from 'react';
 import type { FormEvent } from 'react';
-import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
-import { HiMail } from 'react-icons/hi';
+import SectionHeader from './SectionHeader';
 import emailjs from '@emailjs/browser';
 
+const directory = [
+  { label: 'Email',    value: 'ouanokevinj@gmail.com',  href: 'mailto:ouanokevinj@gmail.com' },
+  { label: 'GitHub',   value: 'github.com/ouanokevinj', href: 'https://github.com/ouanokevinj' },
+  { label: 'LinkedIn', value: 'kevin-jeff-ouano',       href: 'https://www.linkedin.com/in/kevin-jeff-ouano-2b0894276/' },
+  { label: 'Location', value: 'Cebu, Philippines',      href: undefined },
+];
+
 function Contact() {
-  const form = useRef<HTMLFormElement>(null);
+  const form    = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [sent,    setSent]    = useState(false);
 
   const sendEmail = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     if (form.current) {
-      emailjs.sendForm(
-        'service_d2xkh2v',
-        'template_xqxka9i',
-        form.current,
-        'YzuOCClH6ePbgt9A-'
-      ).then(() => {
-        setLoading(false);
-        setSent(true);
-        form.current?.reset();
-        setTimeout(() => setSent(false), 5000);
-      }, (error) => {
-        setLoading(false);
-        alert('Failed to send. Please try again.');
-        console.error(error.text);
-      });
+      emailjs.sendForm('service_d2xkh2v', 'template_xqxka9i', form.current, 'YzuOCClH6ePbgt9A-')
+        .then(() => { setLoading(false); setSent(true); form.current?.reset(); setTimeout(() => setSent(false), 5000); })
+        .catch(err => { setLoading(false); alert('Failed to send. Please try again.'); console.error(err); });
     }
-  };
-
-  const inputStyle: React.CSSProperties = {
-    width: '100%',
-    backgroundColor: 'var(--bg-base)',
-    border: '1px solid var(--border)',
-    borderRadius: '8px',
-    padding: '0.7rem 1rem',
-    color: 'var(--text-primary)',
-    fontSize: '0.9rem',
-    outline: 'none',
-    transition: 'border-color 0.2s',
   };
 
   const labelStyle: React.CSSProperties = {
     display: 'block',
-    fontSize: '0.78rem',
+    fontSize: '0.72rem',
     fontWeight: 600,
+    color: 'var(--text-secondary)',
+    marginBottom: '0.45rem',
     letterSpacing: '0.08em',
-    textTransform: 'uppercase',
-    color: 'var(--text-muted)',
-    marginBottom: '0.4rem',
+    textTransform: 'uppercase' as const,
   };
+
+  /* inputs now use .input-base CSS class; focus ring handled in index.css */
 
   return (
     <section
       id="contact"
-      className="section-texture"
-      style={{
-        minHeight: '100vh',
-        padding: '5rem 1.5rem',
-        display: 'flex',
-        alignItems: 'center',
-        backgroundColor: 'var(--bg-base)',
-      }}
+      style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '5rem 3rem', backgroundColor: 'var(--bg-section)' }}
     >
-      <div style={{ maxWidth: '72rem', margin: '0 auto', width: '100%' }}>
+      <SectionHeader label="Contact" title="Let's talk" />
 
-        {/* Heading */}
-        <div style={{ marginBottom: '3.5rem' }}>
-          <p style={{ fontSize: '0.7rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-            let's talk
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2.5rem', alignItems: 'start' }}>
+
+        {/* Directory */}
+        <div>
+          <p style={{ fontSize: '0.95rem', lineHeight: 1.8, color: 'var(--text-secondary)', marginBottom: '2rem' }}>
+            Open to new opportunities — a full-time role, freelance work,
+            or a conversation worth having.
           </p>
-          <h2
-            className="font-display"
-            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1.1 }}
-          >
-            Get in touch
-          </h2>
-          <div style={{ marginTop: '0.75rem', height: '2px', width: '2.5rem', backgroundColor: 'var(--accent-primary)' }} />
+
+          <div>
+            {directory.map(({ label, value, href }, i) => {
+              const row = (
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', padding: '0.8rem 0', borderTop: i === 0 ? '1px solid var(--border)' : 'none', borderBottom: '1px solid var(--border)' }}>
+                  <span className="eyebrow" style={{ fontSize: '0.65rem', flexShrink: 0 }}>{label}</span>
+                  <span style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-primary)', textAlign: 'right', transition: 'color 0.2s' }}>{value}</span>
+                </div>
+              );
+              return href ? (
+                <a key={label} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer"
+                  style={{ textDecoration: 'none', display: 'block' }}
+                  onMouseEnter={e => { (e.currentTarget.querySelector('span:last-child') as HTMLElement).style.color = 'var(--accent-primary)'; }}
+                  onMouseLeave={e => { (e.currentTarget.querySelector('span:last-child') as HTMLElement).style.color = 'var(--text-primary)'; }}>
+                  {row}
+                </a>
+              ) : <div key={label}>{row}</div>;
+            })}
+          </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem' }}>
-
-          {/* Left — info */}
+        {/* Form */}
+        <form
+          ref={form}
+          onSubmit={sendEmail}
+          className="card"
+          style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1.1rem' }}
+        >
           <div>
-            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.75, marginBottom: '2rem', fontSize: '0.95rem' }}>
-              I'm currently looking for new opportunities — whether it's a full-time role, a freelance project, or just a conversation worth having. My inbox is open.
-            </p>
-
-            {/* Email card */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1rem',
-                padding: '1rem 1.25rem',
-                backgroundColor: 'var(--bg-card)',
-                border: '1px solid var(--border)',
-                borderRadius: '10px',
-                marginBottom: '1.5rem',
-                boxShadow: 'var(--shadow-sm)',
-              }}
-            >
-              <div style={{
-                width: '2.5rem', height: '2.5rem',
-                backgroundColor: 'var(--bg-section)',
-                border: '1px solid var(--border)',
-                borderRadius: '8px',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: 'var(--accent-primary)',
-                flexShrink: 0,
-              }}>
-                <HiMail size={20} />
-              </div>
-              <div>
-                <p style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.1rem' }}>
-                  Email
-                </p>
-                <a
-                  href="mailto:ouanokevinj@gmail.com"
-                  style={{ color: 'var(--text-primary)', fontWeight: 500, fontSize: '0.9rem', textDecoration: 'none' }}
-                >
-                  ouanokevinj@gmail.com
-                </a>
-              </div>
-            </div>
-
-            {/* Social links */}
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              {[
-                { href: 'https://github.com/ouanokevinj', icon: <FaGithub size={20} />, label: 'GitHub' },
-                { href: 'https://www.linkedin.com/in/kevin-jeff-ouano-2b0894276/', icon: <FaLinkedinIn size={20} />, label: 'LinkedIn' },
-              ].map(({ href, icon, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  title={label}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.4rem',
-                    padding: '0.6rem 1rem',
-                    backgroundColor: 'var(--bg-card)',
-                    border: '1px solid var(--border)',
-                    borderRadius: '8px',
-                    color: 'var(--text-secondary)',
-                    fontSize: '0.82rem',
-                    fontWeight: 500,
-                    textDecoration: 'none',
-                    transition: 'border-color 0.2s, color 0.2s',
-                    boxShadow: 'var(--shadow-sm)',
-                  }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border-hover)';
-                    (e.currentTarget as HTMLAnchorElement).style.color = 'var(--accent-primary)';
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)';
-                    (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-secondary)';
-                  }}
-                >
-                  {icon} {label}
-                </a>
-              ))}
-            </div>
+            <label htmlFor="name" style={labelStyle}>Name <span aria-hidden="true" style={{ color: 'var(--accent-primary)' }}>*</span></label>
+            <input
+              id="name" type="text" name="name"
+              autoComplete="name"
+              placeholder="Your name"
+              required
+              className="input-base"
+            />
+          </div>
+          <div>
+            <label htmlFor="email" style={labelStyle}>Email <span aria-hidden="true" style={{ color: 'var(--accent-primary)' }}>*</span></label>
+            <input
+              id="email" type="email" name="email"
+              autoComplete="email"
+              placeholder="mail@example.com"
+              required
+              className="input-base"
+            />
+          </div>
+          <div>
+            <label htmlFor="message" style={labelStyle}>Message <span aria-hidden="true" style={{ color: 'var(--accent-primary)' }}>*</span></label>
+            <textarea
+              id="message" name="message"
+              rows={5}
+              autoComplete="off"
+              placeholder="What's on your mind?"
+              required
+              className="input-base"
+              style={{ resize: 'none' }}
+            />
           </div>
 
-          {/* Right — form */}
-          <form
-            ref={form}
-            onSubmit={sendEmail}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1.25rem',
-              backgroundColor: 'var(--bg-card)',
-              border: '1px solid var(--border)',
-              borderRadius: '12px',
-              padding: '2rem',
-              boxShadow: 'var(--shadow-card)',
-            }}
-          >
-            <div>
-              <label htmlFor="name" style={labelStyle}>Name</label>
-              <input id="name" type="text" name="name" placeholder="Your name" required style={inputStyle}
-                onFocus={e => (e.currentTarget.style.borderColor = 'var(--accent-primary)')}
-                onBlur={e => (e.currentTarget.style.borderColor = 'var(--border)')}
-              />
-            </div>
-            <div>
-              <label htmlFor="email" style={labelStyle}>Email</label>
-              <input id="email" type="email" name="email" placeholder="mail@example.com" required style={inputStyle}
-                onFocus={e => (e.currentTarget.style.borderColor = 'var(--accent-primary)')}
-                onBlur={e => (e.currentTarget.style.borderColor = 'var(--border)')}
-              />
-            </div>
-            <div>
-              <label htmlFor="message" style={labelStyle}>Message</label>
-              <textarea
-                id="message"
-                name="message"
-                rows={4}
-                placeholder="What's on your mind?"
-                required
-                style={{ ...inputStyle, resize: 'none' }}
-                onFocus={e => (e.currentTarget.style.borderColor = 'var(--accent-primary)')}
-                onBlur={e => (e.currentTarget.style.borderColor = 'var(--border)')}
-              />
-            </div>
+          {sent && (
+            <p style={{ fontSize: '0.875rem', color: 'var(--accent-primary)', fontWeight: 500 }}>
+              ✓ Message sent — I'll be in touch soon.
+            </p>
+          )}
 
-            {sent && (
-              <p style={{ fontSize: '0.85rem', color: 'var(--accent-warm)' }}>
-                ✓ Message sent — I'll get back to you soon.
-              </p>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                backgroundColor: loading ? 'var(--accent-rust)' : 'var(--accent-primary)',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '8px',
-                padding: '0.8rem 1.5rem',
-                fontWeight: 700,
-                fontSize: '0.9rem',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                transition: 'opacity 0.2s',
-                letterSpacing: '0.04em',
-              }}
-              onMouseEnter={e => !loading && ((e.currentTarget as HTMLButtonElement).style.opacity = '0.85')}
-              onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.opacity = '1')}
-            >
-              {loading ? 'Sending…' : 'Send Message'}
-            </button>
-          </form>
-        </div>
+          <button type="submit" disabled={loading} className="btn-primary"
+            style={{ justifyContent: 'center', opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}>
+            {loading ? 'Sending…' : 'Send Message →'}
+          </button>
+        </form>
       </div>
     </section>
   );

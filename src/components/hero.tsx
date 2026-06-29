@@ -1,104 +1,78 @@
 import '../index.css';
+import { Link } from 'react-scroll';
 
+/*
+ * Left-aligned hero. No gradient text, no orbs, no centered-everything template.
+ * The name is the statement. One CTA leads. Resume is secondary.
+ */
 function Hero() {
   return (
     <section
       id="home"
-      className="section-texture"
       style={{
         minHeight: '100vh',
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
         alignItems: 'center',
-        textAlign: 'center',
-        padding: '6rem 1.5rem 4rem',
-        position: 'relative',
-        overflow: 'hidden',
+        padding: '8rem 1.5rem 5rem',
         backgroundColor: 'var(--bg-base)',
       }}
     >
-      {/* Subtle warm tint block — NOT a blur blob */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'radial-gradient(ellipse 80% 55% at 50% 40%, #d4820a09 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }}
-      />
+      <div style={{ maxWidth: '72rem', margin: '0 auto', width: '100%' }}>
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: '56rem', width: '100%' }}>
-
-        {/* Name block */}
-        <div style={{ marginBottom: '1.5rem' }}>
-          <h1
-            className="animate-fade-up font-display"
-            style={{
-              fontSize: 'clamp(3.5rem, 12vw, 9rem)',
-              fontWeight: 900,
-              lineHeight: 1,
-              letterSpacing: '-0.02em',
-              color: 'var(--text-primary)',
-              animationDelay: '0ms',
-            }}
-          >
-            Kevin Jeff
-          </h1>
-          <h1
-            className="animate-fade-up font-display"
-            style={{
-              fontSize: 'clamp(3.5rem, 12vw, 9rem)',
-              fontWeight: 900,
-              lineHeight: 1,
-              letterSpacing: '-0.02em',
-              color: 'var(--accent-primary)',
-              animationDelay: '120ms',
-            }}
-          >
-            Ouano
-          </h1>
-        </div>
-
-        {/* Role line */}
-        <div
-          className="animate-fade-up"
-          style={{ animationDelay: '280ms', display: 'flex', justifyContent: 'center' }}
+        {/* Eyebrow */}
+        <p
+          className="eyebrow animate-in"
+          style={{ marginBottom: '1.5rem', animationDelay: '0ms' }}
         >
-          <span
-            className="animate-typewriter-hold"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: 'clamp(1rem, 2.5vw, 1.35rem)',
-              letterSpacing: '0.1em',
-              color: 'var(--text-secondary)',
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              display: 'inline-block',
-            }}
-          >
-            Full Stack Web Developer
-          </span>
-        </div>
+          Full-Stack Developer · Cebu, PH
+        </p>
 
-        {/* Scroll cue */}
-        <div
-          className="animate-fade-up"
+        {/* Name */}
+        <h1
+          className="font-display animate-in"
           style={{
-            animationDelay: '500ms',
-            marginTop: '3rem',
-            display: 'flex',
-            justifyContent: 'center',
+            fontSize: 'clamp(3.5rem, 10vw, 8rem)',
+            fontWeight: 700,
+            lineHeight: 0.95,
+            letterSpacing: '-0.04em',
+            color: 'var(--text-primary)',
+            marginBottom: '1.75rem',
+            animationDelay: '60ms',
           }}
         >
-          <div
-            style={{
-              width: '1px',
-              height: '3rem',
-              backgroundColor: 'var(--accent-rust)',
-              opacity: 0.4,
-            }}
-          />
+          Kevin Jeff
+          <br />
+          Ouano<span style={{ color: 'var(--accent-primary)' }}>.</span>
+        </h1>
+
+        {/* Descriptor — specific, not generic */}
+        <p
+          className="animate-in"
+          style={{
+            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+            lineHeight: 1.7,
+            color: 'var(--text-secondary)',
+            maxWidth: '36rem',
+            marginBottom: '2.5rem',
+            animationDelay: '120ms',
+          }}
+        >
+          Building web systems and IoT solutions—from clean REST
+          APIs and database-backed apps to embedded hardware with
+          real-time cloud sync.
+        </p>
+
+        {/* CTAs */}
+        <div
+          className="animate-in"
+          style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', animationDelay: '180ms' }}
+        >
+          <Link to="projects" smooth duration={500} offset={-80} className="btn-primary" style={{ cursor: 'pointer' }}>
+            View Work →
+          </Link>
+          <a href="/resume.pdf" target="_blank" rel="noreferrer" className="btn-ghost">
+            Résumé ↗
+          </a>
         </div>
       </div>
     </section>

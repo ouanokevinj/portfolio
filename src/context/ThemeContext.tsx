@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 
-type Theme = 'autumn' | 'night';
+type Theme = 'crimson' | 'obsidian';
 
 interface ThemeContextType {
   theme: Theme;
@@ -9,14 +9,14 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'autumn',
+  theme: 'crimson',
   toggleTheme: () => {},
 });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     const stored = localStorage.getItem('portfolio-theme');
-    return (stored === 'night' || stored === 'autumn') ? stored : 'autumn';
+    return (stored === 'obsidian' || stored === 'crimson') ? stored : 'crimson';
   });
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme]);
 
   const toggleTheme = () =>
-    setTheme((prev) => (prev === 'autumn' ? 'night' : 'autumn'));
+    setTheme((prev) => (prev === 'crimson' ? 'obsidian' : 'crimson'));
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
