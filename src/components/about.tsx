@@ -3,16 +3,6 @@ import SectionHeader from './SectionHeader';
 import { Link } from 'react-scroll';
 import { useEffect, useState } from 'react';
 
-/* Text-only badges — no icons. Mixed icon sets have inconsistent
-   weights and proportions that make a badge row look messy.
-   Monospace text chips are what Vercel, Linear, and Stripe use. */
-const featuredTech = [
-  'Java', 'Spring Boot', 'Vue.js', 'React', 'TypeScript',
-  'JavaScript', 'Python', 'Flask', 'PHP', 'Laravel', 'C++',
-  'MySQL', 'PostgreSQL', 'Firebase', 'Docker', 'Git',
-  'Tailwind CSS', 'Arduino',
-];
-
 const stats = [
   { num: '6',   label: 'Projects' },
   { num: '18+', label: 'Technologies' },
@@ -33,12 +23,13 @@ function AboutMe() {
     <>
       <section
         id="about"
+        className="about-section"
         style={{
           minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
-          padding: '5rem 3rem',
+          justifyContent: 'flex-start',
+          padding: '7rem 3rem 5rem',
           backgroundColor: 'var(--bg-base)',
         }}
       >
@@ -175,20 +166,6 @@ function AboutMe() {
           </div>
         </div>
 
-        {/* ── Tech Stack ─────────────────────────────────────────────── */}
-        {/* Monospace badges immediately read as "developer" to any technical reader */}
-        <div style={{
-          marginTop: '4rem',
-          paddingTop: '2.5rem',
-          borderTop: '1px solid var(--border)',
-        }}>
-          <p className="eyebrow" style={{ marginBottom: '1.25rem' }}>Stack</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-            {featuredTech.map((name) => (
-              <span key={name} className="tech-badge">{name}</span>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* Resume modal */}

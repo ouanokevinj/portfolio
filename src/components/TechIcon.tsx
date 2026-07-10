@@ -3,7 +3,7 @@ import { FaJava, FaGitAlt, FaLaravel, FaProjectDiagram } from 'react-icons/fa';
 import {
   SiUbuntu, SiDocker, SiMysql, SiFirebase, SiSpring,
   SiPython, SiPhp, SiTailwindcss, SiReact, SiJavascript,
-  SiTypescript, SiFlask, SiPostgresql, SiCplusplus,
+  SiTypescript, SiFastapi, SiPostgresql, SiCplusplus,
   SiVuedotjs, SiArduino,
 } from 'react-icons/si';
 
@@ -34,7 +34,7 @@ export function TechIcon({ name, size = 14 }: TechIconProps) {
     'React': <SiReact />,
     'Spring': <SiSpring />,
     'Spring Boot': <SiSpring />,
-    'Flask': <SiFlask />,
+    'FastAPI': <SiFastapi />,
     'Laravel': <FaLaravel />,
     'Tailwind': <SiTailwindcss />,
     'Tailwind CSS': <SiTailwindcss />,
@@ -99,35 +99,3 @@ export function TechIcon({ name, size = 14 }: TechIconProps) {
     </span>
   );
 }
-
-// Export the icon map for potential external use
-export const techIconMap = {
-  // Languages
-  'Java': FaJava,
-  'C++': SiCplusplus,
-  'Python': SiPython,
-  'PHP': SiPhp,
-  'JavaScript': SiJavascript,
-  'TypeScript': SiTypescript,
-  // Frameworks
-  'React': SiReact,
-  'Spring': SiSpring,
-  'Spring Boot': SiSpring,
-  'Flask': SiFlask,
-  'Laravel': FaLaravel,
-  'Tailwind': SiTailwindcss,
-  'Tailwind CSS': SiTailwindcss,
-  'Vue.js': SiVuedotjs,
-  'Vue': SiVuedotjs,
-  // Data
-  'MySQL': SiMysql,
-  'PostgreSQL': SiPostgresql,
-  'Postgres': SiPostgresql,
-  'Firebase': SiFirebase,
-  // Tools & Platforms
-  'Git': FaGitAlt,
-  'Docker': SiDocker,
-  'Ubuntu': SiUbuntu,
-  'Agile': FaProjectDiagram,
-  'Arduino': SiArduino,
-};

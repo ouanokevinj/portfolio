@@ -60,7 +60,7 @@ function Navbar() {
             smooth duration={500}
             style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.15rem', letterSpacing: '-0.02em', color: 'var(--text-primary)', cursor: 'pointer' }}
           >
-            autumndude<span style={{ color: 'var(--accent-primary)' }}>.</span>
+            Kevin Jeff Ouano<span style={{ color: 'var(--accent-primary)' }}>.</span>
           </Link>
 
           {/* Desktop links */}

@@ -5,17 +5,17 @@ import { FaGithub } from 'react-icons/fa';
 import { FiExternalLink, FiX } from 'react-icons/fi';
 import enomyImg     from '../assets/img/enomy-ui.png';
 import portfolioImg from '../assets/img/portfolio-front.png';
-import todoImg      from '../assets/img/todo-front.png';
 import dobuImg      from '../assets/img/dobu-front.png';
 import crmImg       from '../assets/img/crm-front.png';
 import libraryImg   from '../assets/img/library-borrow-prototype.jpg';
+import bsyatrackImg from '../assets/img/bsyatrack.png';
 
 type Project = {
   title: string;
   note: string;
   description: string;
   tech: string[];
-  image: string;
+  image?: string;
   codeUrl?: string;
   liveUrl?: string;
 };
@@ -44,11 +44,12 @@ const projects: Project[] = [
     image: enomyImg,
   },
   {
-    title: 'Task Manager with Cloud Sync',
-    note: 'Web App',
-    description: "A to-do app backed by Firebase so your tasks don't disappear when you close the tab. Flask backend, intentionally minimal frontend — focused on the real-time sync behaviour.",
-    tech: ['Python', 'Flask', 'Firebase', 'HTML / CSS / JS'],
-    image: todoImg,
+    title: 'BSYA Track',
+    note: 'Personal Project',
+    description: 'A deployed player intelligence dashboard for Rust players that combines Steam profile data, Rust playtime, and BattleMetrics lookup into one searchable report. Built with fallback identity linking, Docker, Caddy HTTPS, and Google Cloud deployment.',
+    tech: ['Vue.js', 'TypeScript', 'FastAPI', 'Docker', 'Caddy', 'Google Cloud', 'Steam API', 'BattleMetrics API'],
+    liveUrl: 'https://bsyatrack.fun/',
+    image: bsyatrackImg,
   },
   {
     title: 'Dobu Martial Arts',
@@ -93,16 +94,23 @@ function Projects() {
               {/* Image */}
               <div
                 style={{ cursor: 'pointer', overflow: 'hidden', aspectRatio: '16/10', position: 'relative' }}
-                onClick={() => setSelectedImage(p.image)}
+                onClick={() => p.image && setSelectedImage(p.image)}
               >
-                <img
+                {p.image ? <img
                   src={p.image}
                   alt={p.title}
                   loading="lazy"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s ease' }}
                   onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
                   onMouseLeave={e => (e.currentTarget.style.transform = 'none')}
-                />
+                /> : (
+                  <div className="project-placeholder" aria-label={`${p.title} project preview`}>
+                    <span className="project-placeholder-dot" />
+                    <span className="project-placeholder-label">live / player intelligence</span>
+                    <strong>BSYA<br />TRACK</strong>
+                    <span className="project-placeholder-url">bsyatrack.fun</span>
+                  </div>
+                )}
                 <div
                   style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, background: 'rgba(0,0,0,0.2)', transition: 'opacity 0.3s' }}
                   onMouseEnter={e => (e.currentTarget.style.opacity = '1')}

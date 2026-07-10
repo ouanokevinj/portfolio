@@ -1,4 +1,5 @@
 import '../index.css';
+import { useState } from 'react';
 import { Link } from 'react-scroll';
 import { useTheme } from '../context/ThemeContext';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
@@ -21,46 +22,47 @@ const MoonIcon = () => (
 
 const navLinks = [
   { to: 'about',    label: 'About'   },
+  { to: 'skills',   label: 'Stack'   },
   { to: 'projects', label: 'Work'    },
   { to: 'contact',  label: 'Contact' },
 ];
 
 function Sidebar() {
   const { theme, toggleTheme } = useTheme();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar${isMenuOpen ? ' mobile-menu-open' : ''}`}>
       <div>
         {/* Avatar — double-ring: bg-base gap + border. The availability
             dot uses the same gap trick to float cleanly on any background. */}
-        <div style={{ position: 'relative', width: 80, marginBottom: '1.75rem' }}>
+        <div className="sidebar-avatar-frame" style={{ position: 'relative', width: 120, marginBottom: '1.75rem' }}>
           <img
+            className="sidebar-avatar"
             src={profileImage}
             alt="Kevin Jeff Ouano"
             style={{
-              width: 80,
-              height: 80,
+              width: 120,
+              height: 120,
               borderRadius: '50%',
               objectFit: 'cover',
               objectPosition: 'center top',
               display: 'block',
               /* grayscale → editorial; removes ID-card feel. Color
                  revealed on hover as a micro-delight. */
-              filter: 'grayscale(100%)',
-              transition: 'filter 0.4s ease',
-              boxShadow: '0 0 0 2px var(--bg-base), 0 0 0 3px var(--border)',
+              filter: 'none',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              boxShadow: '0 0 0 2px var(--bg-base), 0 0 0 3px var(--accent-primary)',
             }}
-            onMouseEnter={e => (e.currentTarget.style.filter = 'grayscale(0%)')}
-            onMouseLeave={e => (e.currentTarget.style.filter = 'grayscale(100%)')}
           />
           <span
             aria-label="Available for work"
             style={{
               position: 'absolute',
-              bottom: 3,
-              right: 3,
-              width: 12,
-              height: 12,
+              bottom: 4,
+              right: 4,
+              width: 15,
+              height: 15,
               borderRadius: '50%',
               backgroundColor: '#22c55e',
               border: '2px solid var(--bg-base)',
@@ -114,6 +116,18 @@ function Sidebar() {
           Cebu, PH · Open to work
         </p>
 
+        <button
+          type="button"
+          className="mobile-menu-toggle"
+          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen(open => !open)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
         {/* Nav */}
         <nav
           className="animate-in"
@@ -127,6 +141,7 @@ function Sidebar() {
               spy smooth offset={-40} duration={500}
               className="nav-link"
               activeClass="nav-active"
+              onClick={() => setIsMenuOpen(false)}
             >
               <span className="nav-line" />
               {label}

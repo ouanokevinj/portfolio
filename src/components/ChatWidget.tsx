@@ -47,9 +47,10 @@ Kevin engineers full-stack systems — REST APIs, web platforms, and IoT deploym
    Role-based finance management system where different roles see different data and access levels.
    Stack: Java, Spring Boot, MySQL, Bootstrap
 
-4. Task Manager with Cloud Sync [Web App]
-   To-do app with real-time Firebase sync across devices. Flask backend kept minimal by design.
-   Stack: Python, Flask, Firebase, HTML/CSS/JS
+4. BSYA Track [Personal Project — deployed]
+   Player intelligence dashboard for Rust players combining Steam profile data, Rust playtime, and BattleMetrics lookup into one searchable report.
+   Stack: Vue.js, TypeScript, FastAPI, Docker, Caddy, Google Cloud, Steam API, BattleMetrics API
+   Live: bsyatrack.fun
 
 5. Dobu Martial Arts [Academic]
    Class catalog and enrollment site for a local gym. Mobile-first, client-maintainable.
@@ -62,7 +63,7 @@ Kevin engineers full-stack systems — REST APIs, web platforms, and IoT deploym
 
 ── TECH STACK ──
 Languages:   Java, C++, Python, PHP, JavaScript, TypeScript
-Frameworks:  Spring Boot, Vue.js, React, Flask, Laravel, Tailwind CSS
+Frameworks:  Spring Boot, Vue.js, React, FastAPI, Laravel, Tailwind CSS
 Databases:   MySQL, PostgreSQL, Firebase
 Tools:       Git, Docker, Ubuntu, Agile
 Hardware:    Arduino Uno, ESP8266
@@ -120,6 +121,7 @@ function ChatWidget() {
   const [messages, setMessages] = useState<Message[]>([WELCOME]);
   const [input, setInput]       = useState('');
   const [loading, setLoading]   = useState(false);
+  const [showWidget, setShowWidget] = useState(false);
   const endRef                  = useRef<HTMLDivElement>(null);
   const inputRef                = useRef<HTMLTextAreaElement>(null);
 
@@ -132,6 +134,17 @@ function ChatWidget() {
   useEffect(() => {
     if (isOpen) setTimeout(() => inputRef.current?.focus(), 150);
   }, [isOpen]);
+
+  useEffect(() => {
+    const updateVisibility = () => {
+      const visible = window.scrollY > window.innerHeight * 0.75;
+      setShowWidget(visible);
+      if (!visible) setIsOpen(false);
+    };
+    updateVisibility();
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    return () => window.removeEventListener('scroll', updateVisibility);
+  }, []);
 
   const send = async () => {
     const text = input.trim();
@@ -188,6 +201,8 @@ function ChatWidget() {
   };
 
   const canSend = input.trim().length > 0 && !loading;
+
+  if (!showWidget) return null;
 
   return (
     <div style={{ position: 'fixed', bottom: '1.5rem', right: '1.5rem', zIndex: 200, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.75rem' }}>
