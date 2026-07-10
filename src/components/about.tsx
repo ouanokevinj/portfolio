@@ -2,6 +2,7 @@ import '../index.css';
 import SectionHeader from './SectionHeader';
 import { Link } from 'react-scroll';
 import { useEffect, useState } from 'react';
+import profileImage from '../assets/img/kevin.png';
 
 const stats = [
   { num: '6',   label: 'Projects' },
@@ -33,6 +34,18 @@ function AboutMe() {
           backgroundColor: 'var(--bg-base)',
         }}
       >
+        <img
+          className="about-avatar"
+          src={profileImage}
+          alt="Kevin Jeff Ouano"
+        />
+
+        <div className="about-identity">
+          <h1 className="font-display">Kevin Jeff Ouano</h1>
+          <p>Full-Stack Developer</p>
+          <span>Cebu, Philippines · <b>Available for work</b></span>
+        </div>
+
         <SectionHeader label="About" title="Who I am" />
 
         {/* Two-column layout */}

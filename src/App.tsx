@@ -3,6 +3,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import LoadingScreen from './components/LoadingScreen';
 import Sidebar from './components/Sidebar';
 import Hero from './components/hero';
+import MobileNavbar from './components/MobileNavbar';
 import AboutMe from './components/about';
 import Skills from './components/skills';
 import ChatWidget from './components/ChatWidget';
@@ -19,6 +20,7 @@ function App() {
     <ThemeProvider>
       {loading && <LoadingScreen onComplete={handleLoadComplete} />}
 
+      <MobileNavbar />
       <Hero />
       <div className="layout">
         <Sidebar />

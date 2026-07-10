@@ -258,6 +258,9 @@ body {
 
 .mobile-menu-toggle { display: none; }
 
+.sidebar-nav { display: flex; flex-direction: column; }
+.sidebar-footer { display: flex; }
+
 .main-content {
   flex: 1;
   min-width: 0;
@@ -567,39 +570,41 @@ body {
   .stack-list { grid-template-columns: 1fr; }
 }
 
+.about-avatar { display: none; }
+
 @media (max-width: 760px) {
   .sidebar {
-    padding: 2rem 1.25rem 1.25rem;
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
+  /* Face lives on the About section on mobile — the sidebar header
+     stays lean so it doesn't eat a full screen's worth of scroll. */
+  .sidebar-avatar-frame {
+    display: none;
   }
 
   .sidebar > div:first-child {
     display: grid;
-    grid-template-columns: 96px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     column-gap: 1rem;
-    align-items: center;
+    align-items: start;
   }
 
-  .sidebar-avatar-frame {
-    grid-row: span 4;
-    width: 92px !important;
-    margin: 0 !important;
+  .sidebar > div:first-child > h1 {
+    grid-column: 1;
+    font-size: 1.35rem !important;
   }
 
-  .sidebar-avatar {
-    width: 92px !important;
-    height: 92px !important;
-  }
-
-  .sidebar > div:first-child > h1,
   .sidebar > div:first-child > p {
-    grid-column: 2;
+    grid-column: 1;
   }
 
   .mobile-menu-toggle {
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     grid-column: 2;
-    grid-row: 4;
-    justify-self: end;
+    grid-row: 1;
+    align-self: center;
     align-items: center;
     justify-content: center;
     gap: 4px;
@@ -625,10 +630,6 @@ body {
   .mobile-menu-open .mobile-menu-toggle span:nth-child(2) { opacity: 0; }
   .mobile-menu-open .mobile-menu-toggle span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
 
-  .sidebar > div:first-child > h1 {
-    font-size: 1.35rem !important;
-  }
-
   .sidebar > div:first-child > nav {
     grid-column: 1 / -1;
     width: 100%;
@@ -645,16 +646,184 @@ body {
   .sidebar .nav-link { padding: 0.5rem 0; font-size: 0.7rem; }
   .sidebar .nav-line { width: 1.5rem; }
 
-  .sidebar > div:last-child {
-    margin-top: 1.5rem;
-    padding-top: 1rem;
+  /* Footer (theme toggle) rides along with the nav — one hamburger,
+     one dropdown. Socials are dropped on mobile entirely: they're
+     one tap away via the About/Contact sections, not worth the row. */
+  .sidebar-socials { display: none; }
+
+  .sidebar-footer {
+    display: none;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
     border-top: 1px solid var(--border);
+    justify-content: flex-end !important;
   }
+
+  .mobile-menu-open .sidebar-footer { display: flex; }
 
   #projects,
   #contact { padding: 4rem 1.5rem !important; }
 
   footer { padding: 1.25rem 1.5rem !important; }
+
+  .about-avatar {
+    display: block;
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    margin: 0 auto 1.75rem;
+    box-shadow: 0 0 0 2px var(--bg-base), 0 0 0 3px var(--accent-primary);
+  }
+}
+
+.mobile-topbar,
+.mobile-navigation-shell,
+.about-identity { display: none; }
+
+@media (max-width: 760px) {
+  .sidebar { display: none; }
+
+  .mobile-topbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 260;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 58px;
+    padding: 0 1.25rem;
+    background: color-mix(in srgb, var(--hero-bg) 92%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--hero-text) 12%, transparent);
+    backdrop-filter: blur(14px);
+  }
+
+  .mobile-topbar-name {
+    color: var(--hero-text);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .mobile-topbar-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 40px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--hero-text) 20%, transparent);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--hero-text);
+    cursor: pointer;
+  }
+
+  .mobile-topbar-toggle span {
+    display: block;
+    width: 16px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .mobile-navigation-shell {
+    position: fixed;
+    inset: 0;
+    z-index: 250;
+    display: block;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .mobile-navigation-shell.is-open { visibility: visible; pointer-events: auto; }
+
+  .mobile-navigation-backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.68);
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.25s ease;
+  }
+
+  .mobile-navigation-shell.is-open .mobile-navigation-backdrop { opacity: 1; }
+
+  .mobile-navigation-drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    width: min(86vw, 340px);
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6rem 1.75rem 2rem;
+    background: var(--bg-card);
+    border-left: 1px solid var(--border-strong);
+    box-shadow: -18px 0 50px rgba(0, 0, 0, 0.28);
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mobile-navigation-shell.is-open .mobile-navigation-drawer { transform: translateX(0); }
+
+  .mobile-navigation-drawer nav { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 1.5rem; }
+
+  .mobile-drawer-link {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.8rem 0;
+    color: var(--text-secondary);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s ease, padding-left 0.2s ease;
+  }
+
+  .mobile-drawer-link span { color: var(--accent-primary); font-family: var(--font-mono); font-size: 0.68rem; }
+  .mobile-drawer-link:hover { padding-left: 0.35rem; color: var(--text-primary); }
+
+  .mobile-drawer-theme {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-secondary);
+    font: 500 0.8rem var(--font-body);
+    cursor: pointer;
+  }
+
+  .about-identity {
+    display: block;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+
+  .about-identity h1 { margin: 0; color: var(--text-primary); font-size: 1.65rem; line-height: 1; }
+  .about-identity p { margin: 0.55rem 0 0.35rem; color: var(--accent-primary); font: 600 0.78rem var(--font-mono); }
+  .about-identity span { color: var(--text-muted); font: 0.72rem var(--font-mono); }
+  .about-identity b { color: #22c55e; font-weight: 500; }
+
+  .landing-hero { padding-top: 5.5rem; }
 }
 
 /* ─── TECH BADGE VARIANTS ──────────────────────────────────────── */

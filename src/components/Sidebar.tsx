@@ -130,9 +130,9 @@ function Sidebar() {
 
         {/* Nav */}
         <nav
-          className="animate-in"
+          className="sidebar-nav animate-in"
           aria-label="Sections"
-          style={{ marginTop: '3rem', display: 'flex', flexDirection: 'column', gap: '0.1rem', animationDelay: '120ms' }}
+          style={{ marginTop: '3rem', gap: '0.1rem', animationDelay: '120ms' }}
         >
           {navLinks.map(({ to, label }) => (
             <Link
@@ -152,10 +152,10 @@ function Sidebar() {
 
       {/* Bottom row: socials + theme toggle */}
       <div
-        className="animate-in"
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', animationDelay: '200ms' }}
+        className="sidebar-footer animate-in"
+        style={{ alignItems: 'center', justifyContent: 'space-between', animationDelay: '200ms' }}
       >
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <div className="sidebar-socials" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <a
             href="https://github.com/ouanokevinj"
             target="_blank"
