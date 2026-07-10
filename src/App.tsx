@@ -8,6 +8,7 @@ import AboutMe from './components/about';
 import Skills from './components/skills';
 import ChatWidget from './components/ChatWidget';
 import Projects from './components/project';
+import Automations from './components/Automations';
 import Contact from './components/contact';
 import Footer from './components/Footer';
 import './index.css';
@@ -28,6 +29,7 @@ function App() {
           <AboutMe />
           <Skills />
           <Projects />
+          <Automations />
           <Contact />
           <Footer />
         </main>

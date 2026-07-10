@@ -24,6 +24,7 @@ const navLinks = [
   { to: 'about',    label: 'About'   },
   { to: 'skills',   label: 'Stack'   },
   { to: 'projects', label: 'Work'    },
+  { to: 'automations', label: 'Automate' },
   { to: 'contact',  label: 'Contact' },
 ];
 

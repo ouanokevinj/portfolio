@@ -32,7 +32,7 @@ function Hero() {
           transform: `translateY(${-scrollProgress * 72}px)`,
         }}
       >
-        <p className="landing-kicker">Full-Stack Developer</p>
+        <p className="landing-kicker">AI Automation • Full Stack • Cloud</p>
         <h1 className="landing-name">
           <span>Kevin Jeff</span>
           <span className="landing-name-accent">Ouano</span>
