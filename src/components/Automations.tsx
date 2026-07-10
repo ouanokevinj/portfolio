@@ -14,45 +14,45 @@ type AutomationBlueprint = {
 
 const blueprints: AutomationBlueprint[] = [
   {
-    title: 'Lead qualification pipeline',
-    description: 'A small agency loses warm enquiries because nobody has time to read every form submission and route it to the right person.',
-    pain: 'Business pain: slow first response means good leads go to a faster competitor.',
-    target: 'Target: every lead scored and acknowledged in under 10 minutes.',
-    tags: ['Lead Gen', 'AI', 'CRM'],
+    title: 'Client inquiry to CRM follow-up',
+    description: 'A service business gets leads from its website, Facebook forms, and email inbox. n8n captures each inquiry, checks the details, creates a CRM record, sends a confirmation email, and notifies the owner when the lead looks urgent.',
+    pain: 'New inquiries are answered late, copied into spreadsheets by hand, or forgotten after business hours.',
+    target: 'Every inquiry is acknowledged in minutes and stored in one lead pipeline with clear next steps.',
+    tags: ['Client Intake', 'CRM', 'Email'],
     nodes: [
-      { label: 'Form', glyph: '▤' },
-      { label: 'Score', glyph: '⌘', tone: 'crimson' },
-      { label: 'AI', glyph: '{}', tone: 'green' },
-      { label: 'CRM', glyph: '#', tone: 'violet' },
-      { label: 'Slack', glyph: '↗', tone: 'amber' },
+      { label: 'Form', glyph: 'F' },
+      { label: 'Clean', glyph: 'OK', tone: 'green' },
+      { label: 'Qualify', glyph: 'IF', tone: 'crimson' },
+      { label: 'CRM', glyph: 'DB', tone: 'violet' },
+      { label: 'Notify', glyph: '@', tone: 'amber' },
     ],
   },
   {
-    title: 'Invoice follow-up engine',
-    description: 'A freelance studio tracks invoices in a spreadsheet and remembers overdue payments manually at the end of each month.',
-    pain: 'Business pain: late follow-ups create cash-flow gaps and awkward client conversations.',
-    target: 'Target: polite, consistent reminders without duplicate messages.',
-    tags: ['Finance Ops', 'Scheduled', 'Email'],
+    title: 'Invoice reminder and payment log',
+    description: 'A small agency tracks invoices in Google Sheets or QuickBooks. n8n checks overdue invoices every morning, sends staged reminder emails, records each reminder, and flags long-overdue accounts for a human follow-up.',
+    pain: 'Payment follow-ups depend on memory, which creates cash-flow gaps and awkward last-minute messages.',
+    target: 'Consistent reminders, no duplicate emails, and a clean record of who has been contacted.',
+    tags: ['Finance Ops', 'Google Sheets', 'Email'],
     nodes: [
-      { label: 'Cron', glyph: '◷' },
-      { label: 'Sheets', glyph: '▦', tone: 'green' },
-      { label: 'IF overdue', glyph: '!', tone: 'crimson' },
-      { label: 'Email', glyph: '✉' },
-      { label: 'Log', glyph: '✓', tone: 'violet' },
+      { label: 'Daily', glyph: 'T' },
+      { label: 'Sheet', glyph: 'GS', tone: 'green' },
+      { label: 'Overdue', glyph: 'IF', tone: 'crimson' },
+      { label: 'Email', glyph: '@' },
+      { label: 'Log', glyph: 'DB', tone: 'violet' },
     ],
   },
   {
-    title: 'Support ticket triage',
-    description: 'A growing online shop receives repetitive delivery questions while damaged-order tickets wait in the same queue.',
-    pain: 'Business pain: urgent customers wait too long and the support team repeats the same answers.',
-    target: 'Target: route urgent cases to a human and draft safe replies for common questions.',
-    tags: ['Support', 'AI Drafts', 'Human-in-the-loop'],
+    title: 'Order status support assistant',
+    description: 'An online shop receives repeated "where is my order" messages. n8n reads the support inbox, matches the customer to a Shopify order, replies with tracking when available, and opens a ticket only for exceptions like failed delivery or damaged items.',
+    pain: 'Support time is spent answering routine tracking questions while urgent order issues wait in the same queue.',
+    target: 'Routine order questions get answered automatically, while real exceptions reach the team faster.',
+    tags: ['E-commerce', 'Shopify', 'Support Ops'],
     nodes: [
-      { label: 'Inbox', glyph: '▣' },
-      { label: 'Classify', glyph: '⌘', tone: 'crimson' },
-      { label: 'Knowledge', glyph: '▤', tone: 'violet' },
-      { label: 'Draft', glyph: '✎', tone: 'green' },
-      { label: 'Agent', glyph: '→', tone: 'amber' },
+      { label: 'Inbox', glyph: 'IN' },
+      { label: 'Match', glyph: 'ID', tone: 'green' },
+      { label: 'Shopify', glyph: '$', tone: 'violet' },
+      { label: 'Reply', glyph: '@', tone: 'amber' },
+      { label: 'Ticket', glyph: '!', tone: 'crimson' },
     ],
   },
 ];
@@ -94,7 +94,7 @@ function Automations() {
               <h3>{blueprint.title}</h3>
               <p className="automation-description">{blueprint.description}</p>
               <p className="automation-pain"><strong>Pain point</strong>{blueprint.pain}</p>
-              <p className="automation-target"><strong>{blueprint.target.split(':')[0]}</strong>{blueprint.target.split(':').slice(1).join(':')}</p>
+              <p className="automation-target"><strong>Target</strong>{blueprint.target}</p>
               <div className="automation-tags">
                 {blueprint.tags.map((tag) => <span key={tag}>{tag}</span>)}
               </div>

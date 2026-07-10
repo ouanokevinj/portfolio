@@ -72,7 +72,7 @@ function AboutMe() {
             >
               I Develop{' '}
               <span style={{ color: 'var(--accent-primary)' }}>full-stack systems</span>
-              {' '}using modern technologies including Laravel, Spring Boot, React, Vue, FastAPI, and TypeScript. My focus is building software that solves real business problems, from internal business tools and workflow automation to IoT systems deployed in production environments.
+              {' '} that solves real business problems. Using Laravel, Spring Boot, React, Vue, FastAPI, and TypeScript, I create software ranging from internal business tools and workflow automations to production-ready IoT systems.
             </p>
 
             {/* Supporting context — kept to two sentences */}
@@ -82,7 +82,7 @@ function AboutMe() {
               color: 'var(--text-secondary)',
               marginBottom: '0.9rem',
             }}>
-              My projects include RFID attendance and library systems used in schools, CRM platforms with workflow automation, finance management applications, desktop software, and API-driven web platforms. Every project is designed with maintainability, scalability, and user experience in mind..
+              I've built RFID attendance and library systems deployed in schools, CRM platforms with workflow automation, finance management applications, desktop software, and API-driven web platforms. Each project focuses on scalability, maintainability, and delivering measurable value to end users .
             </p>
 
             {/* Student context — one mention, not the lead */}
@@ -92,7 +92,7 @@ function AboutMe() {
               color: 'var(--text-secondary)',
               marginBottom: '2rem',
             }}>
-              I'm a second-year Information Technology student who enjoys turning ideas into working products. I value clean architecture, readable code, and shipping software that people can actually use..
+              While pursuing my BS in Information Technology, I'm continuously building production-ready applications, exploring modern software architecture, and expanding my expertise in cloud infrastructure and AI automation.
             </p>
 
             {/* CTAs — View Projects is primary; that's the whole point of this page */}
@@ -130,7 +130,7 @@ function AboutMe() {
             <div>
               <p className="eyebrow" style={{ marginBottom: '0.75rem' }}>Current Focus</p>
               <blockquote className="focus-quote" style={{ margin: 0 }}>
-                Building scalable applications while deepening my expertise in system design, cloud infrastructure, AI automation, and distributed systems.
+                Building scalable applications while deepening my expertise in system design, cloud architecture, distributed systems, and AI automation.
               </blockquote>
             </div>
 
